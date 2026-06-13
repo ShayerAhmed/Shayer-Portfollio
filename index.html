@@ -1,0 +1,1397 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shayer // Creative Director & Video Editor</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700;800&family=JetBrains+Mono:wght@200;300;400;500;700&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
+                }
+            }
+        }
+    </script>
+
+    <style>
+        :root {
+            --accent-primary: #CCFF00; /* Signature Neon Lime */
+            --accent-primary-rgb: 204, 255, 0;
+            --bg-dark: #06080c;
+            --bg-card: rgba(15, 20, 30, 0.4);
+            --border-color: rgba(255, 255, 255, 0.05);
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            background-image: 
+                linear-gradient(rgba(255, 255, 255, 0.01) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.01) 1px, transparent 1px);
+            background-size: 60px 60px;
+        }
+
+        /* Ambient light glows behind the layouts */
+        .ambient-glow-1 {
+            position: absolute;
+            top: 10%;
+            right: 15%;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(var(--accent-primary-rgb), 0.04) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .ambient-glow-2 {
+            position: absolute;
+            bottom: 15%;
+            left: 10%;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.015) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* Premium cards */
+        .premium-card {
+            background: var(--bg-card);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--border-color);
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .premium-card:hover {
+            border-color: rgba(var(--accent-primary-rgb), 0.2);
+            background: rgba(15, 20, 30, 0.55);
+        }
+
+        /* Video isolation hover interactions */
+        .video-grid-hover-effect:hover .grid-item-target:not(:hover) {
+            opacity: 0.2;
+            filter: blur(4px) grayscale(0.8);
+            transform: scale(0.97);
+        }
+
+        .grid-item-target {
+            transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .grid-item-target:hover {
+            transform: scale(1.03);
+            border-color: var(--accent-primary);
+            box-shadow: 0 15px 40px rgba(var(--accent-primary-rgb), 0.15);
+            z-index: 20;
+        }
+
+        /* Looping Brand Marquee */
+        @keyframes marquee {
+            0% { transform: translateX(0%); }
+            100% { transform: translateX(-50%); }
+        }
+        
+        .marquee-container {
+            display: flex;
+            width: max-content;
+            animation: marquee 30s linear infinite;
+        }
+
+        .marquee-container:hover {
+            animation-play-state: paused;
+        }
+
+        /* Testimonials Vertical Infinite Scroll Animation */
+        @keyframes scrollUp {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-50%); }
+        }
+
+        .scroll-col-1 {
+            animation: scrollUp 24s linear infinite;
+        }
+        .scroll-col-2 {
+            animation: scrollUp 18s linear infinite;
+        }
+        .scroll-col-3 {
+            animation: scrollUp 28s linear infinite;
+        }
+
+        /* Pause scrolling on hover of container */
+        .testimonials-container:hover .scroll-col-1,
+        .testimonials-container:hover .scroll-col-2,
+        .testimonials-container:hover .scroll-col-3 {
+            animation-play-state: paused;
+        }
+
+        /* Dim unhovered cards when testimonials grid is hovered */
+        .testimonials-container:hover .testimonial-card:not(:hover) {
+            opacity: 0.15;
+            filter: blur(4px) grayscale(0.4);
+            transform: scale(0.96);
+        }
+
+        /* Highlight the hovered testimonial card */
+        .testimonial-card {
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+            will-change: transform, opacity, filter;
+        }
+
+        .testimonial-card:hover {
+            transform: scale(1.05) !important;
+            opacity: 1 !important;
+            filter: none !important;
+            box-shadow: 0 20px 50px rgba(var(--accent-primary-rgb), 0.25);
+            background: rgba(18, 24, 38, 0.95);
+            border-color: rgba(var(--accent-primary-rgb), 0.3);
+            z-index: 30;
+        }
+
+        /* Customized minimal scrollbar */
+        ::-webkit-scrollbar {
+            width: 5px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 99px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--accent-primary);
+        }
+
+        .drawer-transition {
+            transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+    </style>
+</head>
+<body class="text-[#f1f5f9] font-sans relative overflow-x-hidden min-h-screen">
+
+    <!-- Interactive subtle star canvas -->
+    <canvas id="constellation-canvas" class="fixed top-0 left-0 w-full h-full z-0 pointer-events-none opacity-20"></canvas>
+
+    <!-- Ambient glows -->
+    <div class="ambient-glow-1"></div>
+    <div class="ambient-glow-2"></div>
+
+    <!-- MAIN PAGE CONTAINER -->
+    <div class="relative z-10 max-w-6xl mx-auto px-6 sm:px-12 flex flex-col justify-between min-h-screen">
+
+        <!-- CLEAN MODERN HEADER -->
+        <header class="w-full py-10 border-b border-white/[0.05] flex justify-between items-center">
+            <!-- Hidden Admin trigger: clicking Shayer 5 times unlocks the video drawer -->
+            <div onclick="handleAdminTrigger()" class="flex items-center space-x-3 cursor-pointer select-none group">
+                <span class="font-mono text-xs tracking-[0.3em] text-white font-extrabold group-hover:text-[#CCFF00] transition-colors">SHAYER</span>
+                <span class="w-1.5 h-1.5 rounded-full bg-[#CCFF00]"></span>
+                <span class="font-mono text-[9px] text-slate-400 tracking-widest uppercase">CREATIVE MOTION</span>
+            </div>
+            
+            <div class="flex items-center space-x-8 font-mono text-[11px] text-slate-400">
+                <span id="header-time" class="tracking-widest hidden sm:inline">00:00:00 GMT</span>
+                <span class="text-xs tracking-wider border border-white/5 px-4 py-2 rounded-full text-slate-400 select-none">PORTFOLIO.V2</span>
+            </div>
+        </header>
+
+        <!-- VERTICAL PORTFOLIO SECTIONS -->
+        <main class="flex-grow py-16 space-y-32">
+
+            <!-- HERO INTRO & PORTRAIT SECTION -->
+            <section class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+                <!-- Text Area (Left) -->
+                <div class="lg:col-span-6 space-y-6">
+                    <span class="font-mono text-[10px] text-[#CCFF00] tracking-widest uppercase block">CINEMATOGRAPHY & MOTION DESIGN</span>
+                    
+                    <h1 class="text-3xl sm:text-5xl font-light tracking-tight text-white leading-tight">
+                        Hi, I am Shayer. <br class="hidden sm:inline">I have been editing videos and creating motion design for 4 years.
+                    </h1>
+                    
+                    <p class="text-slate-400 text-sm sm:text-base leading-relaxed max-w-xl font-light">
+                        Combining pacing, composition, and high-tempo edits to build unforgettable digital stories. Specialized in crafting bespoke frames for both social, short-form reels, and long-form cinematic layouts.
+                    </p>
+
+                    <!-- REFERENCE IMAGE DESIGN INTEGRATION ( Rosetta / Sadness Inspired Pop-Out Cards ) -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-10 max-w-md">
+                        
+                        <!-- CARD 1: DOWNLOAD DOSSIER (Rosetta Red Style with Pop-out SVG) -->
+                        <div onclick="downloadResume()" class="relative group cursor-pointer pt-8">
+                            <!-- Pop-out Graphics Element -->
+                            <div class="absolute -top-3 left-6 w-16 h-16 transition-all duration-500 ease-out group-hover:-translate-y-2.5 group-hover:scale-110 pointer-events-none z-20">
+                                <svg class="w-full h-full filter drop-shadow-[0_8px_16px_rgba(239,68,68,0.4)]" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M50 15 L80 35 L80 70 L50 90 L20 70 L20 35 Z" fill="url(#grad-rosetta)" stroke="#ffccd0" stroke-width="1.5"/>
+                                    <!-- Inner document glyph -->
+                                    <rect x="38" y="38" width="24" height="28" rx="3" fill="white" />
+                                    <line x1="44" y1="45" x2="56" y2="45" stroke="#ff4155" stroke-width="2"/>
+                                    <line x1="44" y1="52" x2="56" y2="52" stroke="#ff4155" stroke-width="2"/>
+                                    <line x1="44" y1="59" x2="50" y2="59" stroke="#CCFF00" stroke-width="2"/>
+                                    <defs>
+                                        <linearGradient id="grad-rosetta" x1="20" y1="15" x2="80" y2="90" gradientUnits="userSpaceOnUse">
+                                            <stop stop-color="#ff6b8b"/>
+                                            <stop offset="1" stop-color="#ef4444"/>
+                                        </linearGradient>
+                                    </defs>
+                                </svg>
+                            </div>
+                            
+                            <!-- Main Solid Card Box -->
+                            <div class="bg-[#ff4155] rounded-3xl p-5 pt-8 shadow-[0_15px_30px_rgba(239,68,68,0.25)] border border-white/10 relative overflow-hidden transition-all duration-500 group-hover:shadow-[0_25px_45px_rgba(239,68,68,0.45)] group-hover:border-white/20">
+                                <div class="absolute inset-0 bg-gradient-to-tr from-black/25 via-transparent to-white/10 pointer-events-none"></div>
+                                <div class="absolute -right-4 -bottom-4 w-16 h-16 rounded-full bg-white/5 border border-white/10 group-hover:scale-125 transition-transform duration-700"></div>
+                                
+                                <h3 class="font-sans text-lg font-bold text-white tracking-wide mt-2">Download CV</h3>
+                                <p class="font-mono text-[9px] text-white/80 mt-0.5 tracking-wider">FORMAT // <span class="font-bold text-white">INTERACTIVE PDF</span></p>
+                            </div>
+                        </div>
+
+                        <!-- CARD 2: LINKEDIN ARCHIVE (Sadness Cobalt Blue Style with Pop-out SVG) -->
+                        <div onclick="window.open('https://www.linkedin.com/in/shayertheone/', '_blank')" class="relative group cursor-pointer pt-8">
+                            <!-- Pop-out Graphics Element -->
+                            <div class="absolute -top-3 left-6 w-16 h-16 transition-all duration-500 ease-out group-hover:-translate-y-2.5 group-hover:scale-110 pointer-events-none z-20">
+                                <svg class="w-full h-full filter drop-shadow-[0_8px_16px_rgba(30,81,164,0.4)]" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <circle cx="50" cy="50" r="32" fill="url(#grad-sadness)" stroke="#cce3ff" stroke-width="1.5"/>
+                                    <!-- Inner LinkedIn brand text -->
+                                    <rect x="36" y="36" width="28" height="28" rx="4" fill="white"/>
+                                    <text x="50" y="57" fill="#1e51a4" font-family="'Inter', sans-serif" font-weight="900" font-size="20" text-anchor="middle">in</text>
+                                    <defs>
+                                        <linearGradient id="grad-sadness" x1="18" y1="18" x2="82" y2="82" gradientUnits="userSpaceOnUse">
+                                            <stop stop-color="#3b82f6"/>
+                                            <stop offset="1" stop-color="#1d4ed8"/>
+                                        </linearGradient>
+                                    </defs>
+                                </svg>
+                            </div>
+                            
+                            <!-- Main Solid Card Box -->
+                            <div class="bg-[#1e51a4] rounded-3xl p-5 pt-8 shadow-[0_15px_30px_rgba(30,81,164,0.25)] border border-white/10 relative overflow-hidden transition-all duration-500 group-hover:shadow-[0_25px_45px_rgba(30,81,164,0.45)] group-hover:border-white/20">
+                                <div class="absolute inset-0 bg-gradient-to-tr from-black/25 via-transparent to-white/10 pointer-events-none"></div>
+                                <div class="absolute -right-4 -bottom-4 w-16 h-16 rounded-full bg-white/5 border border-white/10 group-hover:scale-125 transition-transform duration-700"></div>
+                                
+                                <h3 class="font-sans text-lg font-bold text-white tracking-wide mt-2">LinkedIn</h3>
+                                <p class="font-mono text-[9px] text-white/80 mt-0.5 tracking-wider">USER // <span class="font-bold text-white">@SHAYERTHEONE</span></p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- Portrait Space & Overlapping Intro Video Area (Right Column) -->
+                <div class="lg:col-span-6 relative flex justify-center items-center py-12 px-4 sm:px-8">
+                    <!-- Main Portrait Card (Large, prominent) -->
+                    <div class="premium-card p-3 rounded-[32px] w-full max-w-[320px] aspect-[4/5] relative z-10 shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
+                        <div class="relative w-full h-full rounded-2xl overflow-hidden bg-slate-900 border border-white/5">
+                            <!-- Shayer Portrait -->
+                            <img id="profile-photo" src="shayer.jpg" 
+                                 alt="Shayer" 
+                                 class="w-full h-full object-cover"
+                                 onerror="this.classList.add('hidden'); document.getElementById('portrait-placeholder-svg').classList.remove('hidden');" />
+                            
+                            <!-- Elegant SVG Portrait Fallback -->
+                            <div id="portrait-placeholder-svg" class="hidden w-full h-full bg-[#0a0d14] flex flex-col items-center justify-center space-y-4 p-8 text-center absolute inset-0">
+                                <svg class="w-16 h-16 text-[#CCFF00]/80" fill="none" stroke="currentColor" stroke-width="1" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
+                                </svg>
+                                <div>
+                                    <span class="block font-mono text-xs text-slate-400 font-bold uppercase tracking-widest">SHAYER</span>
+                                    <span class="block font-mono text-[9px] text-slate-500 mt-1">DHAKA, BANGLADESH</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Overlapping Intro Video Card (Overlaps slightly on bottom-left, on top) -->
+                    <div class="absolute bottom-6 left-[2%] sm:left-[6%] md:left-[10%] w-[55%] sm:w-[50%] aspect-video premium-card p-2 rounded-2xl cursor-pointer z-20 shadow-[0_25px_60px_rgba(0,0,0,0.85)] border border-white/10 group" onclick="openLightbox(activeIntroVideo, false)">
+                        <div class="relative w-full h-full rounded-xl overflow-hidden bg-slate-900 border border-white/5 flex items-center justify-center">
+                            <!-- Premium Cinematic Thumbnail background -->
+                            <img id="intro-video-preview" src="https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?auto=format&fit=crop&w=800&q=80" 
+                                 alt="Video Preview" 
+                                 class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 opacity-50" />
+                            
+                            <!-- Translucent Glass Video Play Cover Overlay -->
+                            <div class="absolute inset-0 bg-black/40 group-hover:bg-black/50 transition-colors flex flex-col items-center justify-center space-y-1.5 z-10">
+                                <div class="w-10 h-10 rounded-full bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center shadow-lg transform scale-100 group-hover:scale-110 transition-transform duration-300">
+                                    <svg class="w-4 h-4 text-[#CCFF00] fill-current translate-x-0.5" viewBox="0 0 24 24">
+                                        <path d="M8 5v14l11-7z" />
+                                    </svg>
+                                </div>
+                                <span class="font-mono text-[8px] text-[#CCFF00] tracking-[0.15em] uppercase font-bold">WATCH INTRO</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- "Know me better" Arrow & Text Indicator -->
+                    <div class="absolute bottom-[35%] left-[2%] sm:left-[6%] md:left-[10%] hidden sm:flex flex-col items-end z-30 pointer-events-none transform -translate-x-[75%]">
+                        <span class="font-sans text-xs text-[#CCFF00] tracking-[0.1em] font-light whitespace-nowrap opacity-90 mb-0.5 lowercase italic">know me better</span>
+                        <!-- Custom loopy hand-drawn style arrow pointing right/down towards the intro video card -->
+                        <svg class="w-16 h-12 text-[#CCFF00] opacity-80" viewBox="0 0 80 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M10,5 C25,2 32,22 22,22 C12,22 17,8 42,18 C55,23 65,32 70,38" stroke="currentColor" stroke-width="1.8" stroke-dasharray="3 3" stroke-linecap="round"/>
+                            <path d="M60,35 L70,38 L66,28" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION: LONG VIDEOS (Horizontal Multi-Grid) -->
+            <section class="space-y-8" id="long-videos-section">
+                <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-white/5 pb-6">
+                    <div>
+                        <span class="font-mono text-xs text-[#CCFF00] uppercase tracking-widest">LANDSCAPE MONUMENTS</span>
+                        <h2 class="text-2xl sm:text-3xl font-light text-white mt-1">Long Videos</h2>
+                    </div>
+                    <p class="font-mono text-xs text-slate-400 max-w-sm md:text-right font-light">
+                        Simultaneous landscape visual panels. Click any video cell to expand and play on the large stage.
+                    </p>
+                </div>
+
+                <!-- 3x3 Grid of horizontal videos -->
+                <div class="premium-card p-4 sm:p-6 rounded-3xl relative overflow-hidden">
+                    <div id="long-videos-container" class="video-grid-hover-effect grid grid-cols-1 md:grid-cols-3 gap-4 w-full">
+                        <!-- Instantiated by JS dynamically -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION: REELS / SHORTS (Vertical Multi-Grid) -->
+            <section class="space-y-8" id="shorts-section">
+                <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-white/5 pb-6">
+                    <div>
+                        <span class="font-mono text-xs text-[#CCFF00] uppercase tracking-widest">VERTICAL MONUMENTS</span>
+                        <h2 class="text-2xl sm:text-3xl font-light text-white mt-1">Reels / Shorts</h2>
+                    </div>
+                    <p class="font-mono text-xs text-slate-400 max-w-sm md:text-right font-light">
+                        Multi-channel vertical layout playback. Click to expand and play in vertical cinema focus mode.
+                    </p>
+                </div>
+
+                <!-- 4 Column Vertical Reels -->
+                <div class="premium-card p-4 sm:p-6 rounded-3xl">
+                    <div id="shorts-container" class="video-grid-hover-effect grid grid-cols-2 md:grid-cols-4 gap-4 w-full">
+                        <!-- Instantiated by JS dynamically -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION: TESTIMONIALS (Vertical Loop Grid) -->
+            <section class="space-y-8" id="testimonials-section">
+                <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-white/5 pb-6">
+                    <div>
+                        <span class="font-mono text-xs text-[#CCFF00] uppercase tracking-widest">FEEDBACK DIRECTORY</span>
+                        <h2 class="text-2xl sm:text-3xl font-light text-white mt-1">What Project Managers, CSMs, and Team Leads say about me</h2>
+                    </div>
+                    <p class="font-mono text-xs text-slate-400 max-w-sm md:text-right font-light">
+                        Looping systems of industry trust. Hover over any single dossier to pause the loop and inspect metrics.
+                    </p>
+                </div>
+
+                <!-- Loop Container (No outer border, borderless premium look) -->
+                <div class="testimonials-container relative overflow-hidden h-[480px] p-6 rounded-3xl bg-[#090b10]/40">
+                    <!-- Top/Bottom Vignette Shadows -->
+                    <div class="absolute top-0 inset-x-0 h-20 bg-gradient-to-b from-[#06080c] via-[#06080c]/50 to-transparent z-20 pointer-events-none"></div>
+                    <div class="absolute bottom-0 inset-x-0 h-20 bg-gradient-to-t from-[#06080c] via-[#06080c]/50 to-transparent z-20 pointer-events-none"></div>
+
+                    <!-- Grid wrapper containing columns -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 h-full relative z-10">
+                        
+                        <!-- COLUMN 1 (Active on all sizes) -->
+                        <div class="h-full overflow-visible flex flex-col">
+                            <div class="scroll-col-1 flex flex-col gap-4">
+                                <!-- Testimonial 1 -->
+                                <div class="testimonial-card relative p-6 rounded-[28px] bg-slate-900/50 border border-white/5 flex flex-col justify-between space-y-4 h-[220px] shrink-0 group overflow-visible">
+                                    <div class="flex justify-between items-start relative z-10">
+                                        <div class="w-8 h-8 rounded-full bg-black/60 border border-white/10 flex items-center justify-center text-[#CCFF00] shadow-[0_0_10px_rgba(204,255,0,0.15)]">
+                                            <svg class="w-3 h-3 fill-current" viewBox="0 0 24 24"><path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-4.765 2.627-4.765 5.986h5.77v9.864h-11v0zm-12 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-4.77 2.627-4.77 5.986h5.774v9.864h-11v0z"/></svg>
+                                        </div>
+                                    </div>
+                                    <p class="text-slate-300 text-xs font-light italic leading-relaxed relative z-10">
+                                        "Shayer's speed is unmatched. He turned around a complex 3D commercial in 48 hours without compromising on the high-fidelity motion elements. Absolute professional."
+                                    </p>
+                                    <div class="flex items-center space-x-3 relative z-10">
+                                        <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=120&q=80" alt="Sarah Jenkins" class="w-8 h-8 rounded-full border border-white/10 object-cover" />
+                                        <div>
+                                            <h4 class="font-mono text-xs font-bold text-white">Sarah Jenkins</h4>
+                                            <p class="font-mono text-[9px] text-[#CCFF00] tracking-wider uppercase">Senior Project Manager // Aether</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Testimonial 2 -->
+                                <div class="testimonial-card relative p-6 rounded-[28px] bg-slate-900/50 border border-white/5 flex flex-col justify-between space-y-4 h-[220px] shrink-0 group overflow-visible">
+                                    <div class="flex justify-between items-start relative z-10">
+                                        <div class="w-8 h-8 rounded-full bg-black/60 border border-white/10 flex items-center justify-center text-[#CCFF00] shadow-[0_0_10px_rgba(204,255,0,0.15)]">
+                                            <svg class="w-3 h-3 fill-current" viewBox="0 0 24 24"><path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-4.765 2.627-4.765 5.986h5.77v9.864h-11v0zm-12 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-4.77 2.627-4.77 5.986h5.774v9.864h-11v0z"/></svg>
+                                        </div>
+                                    </div>
+                                    <p class="text-slate-300 text-xs font-light italic leading-relaxed relative z-10">
+                                        "Working with Shayer on our product rollout was seamless. He understands motion deeply and translates tricky feedback into polished assets."
+                                    </p>
+                                    <div class="flex items-center space-x-3 relative z-10">
+                                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=120&q=80" alt="David Chen" class="w-8 h-8 rounded-full border border-white/10 object-cover" />
+                                        <div>
+                                            <h4 class="font-mono text-xs font-bold text-white">David Chen</h4>
+                                            <p class="font-mono text-[9px] text-[#CCFF00] tracking-wider uppercase">Lead CSM // Monolith</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Duplicated items for infinite loop -->
+                                <div class="testimonial-card relative p-6 rounded-[28px] bg-slate-900/50 border border-white/5 flex flex-col justify-between space-y-4 h-[220px] shrink-0 group overflow-visible">
+                                    <div class="flex justify-between items-start relative z-10">
+                                        <div class="w-8 h-8 rounded-full bg-black/60 border border-white/10 flex items-center justify-center text-[#CCFF00] shadow-[0_0_10px_rgba(204,255,0,0.15)]">
+                                            <svg class="w-3 h-3 fill-current" viewBox="0 0 24 24"><path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-4.765 2.627-4.765 5.986h5.77v9.864h-11v0zm-12 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-4.77 2.627-4.77 5.986h5.774v9.864h-11v0z"/></svg>
+                                        </div>
+                                    </div>
+                                    <p class="text-slate-300 text-xs font-light italic leading-relaxed relative z-10">
+                                        "Shayer's speed is unmatched. He turned around a complex 3D commercial in 48 hours without compromising on the high-fidelity motion elements. Absolute professional."
+                                    </p>
+                                    <div class="flex items-center space-x-3 relative z-10">
+                                        <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=120&q=80" alt="Sarah Jenkins" class="w-8 h-8 rounded-full border border-white/10 object-cover" />
+                                        <div>
+                                            <h4 class="font-mono text-xs font-bold text-white">Sarah Jenkins</h4>
+                                            <p class="font-mono text-[9px] text-[#CCFF00] tracking-wider uppercase">Senior Project Manager // Aether</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="testimonial-card relative p-6 rounded-[28px] bg-slate-900/50 border border-white/5 flex flex-col justify-between space-y-4 h-[220px] shrink-0 group overflow-visible">
+                                    <div class="flex justify-between items-start relative z-10">
+                                        <div class="w-8 h-8 rounded-full bg-black/60 border border-white/10 flex items-center justify-center text-[#CCFF00] shadow-[0_0_10px_rgba(204,255,0,0.15)]">
+                                            <svg class="w-3 h-3 fill-current" viewBox="0 0 24 24"><path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-4.765 2.627-4.765 5.986h5.77v9.864h-11v0zm-12 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-4.77 2.627-4.77 5.986h5.774v9.864h-11v0z"/></svg>
+                                        </div>
+                                    </div>
+                                    <p class="text-slate-300 text-xs font-light italic leading-relaxed relative z-10">
+                                        "Working with Shayer on our product rollout was seamless. He understands motion deeply and translates tricky feedback into polished assets."
+                                    </p>
+                                    <div class="flex items-center space-x-3 relative z-10">
+                                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=120&q=80" alt="David Chen" class="w-8 h-8 rounded-full border border-white/10 object-cover" />
+                                        <div>
+                                            <h4 class="font-mono text-xs font-bold text-white">David Chen</h4>
+                                            <p class="font-mono text-[9px] text-[#CCFF00] tracking-wider uppercase">Lead CSM // Monolith</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- COLUMN 2 (Tablet & Desktop) -->
+                        <div class="h-full overflow-visible hidden md:flex flex-col">
+                            <div class="scroll-col-2 flex flex-col gap-4">
+                                <!-- Testimonial 3 -->
+                                <div class="testimonial-card relative p-6 rounded-[28px] bg-slate-900/50 border border-white/5 flex flex-col justify-between space-y-4 h-[220px] shrink-0 group overflow-visible">
+                                    <div class="flex justify-between items-start relative z-10">
+                                        <div class="w-8 h-8 rounded-full bg-black/60 border border-white/10 flex items-center justify-center text-[#CCFF00] shadow-[0_0_10px_rgba(204,255,0,0.15)]">
+                                            <svg class="w-3 h-3 fill-current" viewBox="0 0 24 24"><path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-4.765 2.627-4.765 5.986h5.77v9.864h-11v0zm-12 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-4.77 2.627-4.77 5.986h5.774v9.864h-11v0z"/></svg>
+                                        </div>
+                                    </div>
+                                    <p class="text-slate-300 text-xs font-light italic leading-relaxed relative z-10">
+                                        "He doesn't just edit; he directs. Shayer took our raw footage and arranged a compelling, high-tempo visual masterpiece that boosted our retention."
+                                    </p>
+                                    <div class="flex items-center space-x-3 relative z-10">
+                                        <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=120&q=80" alt="Amara Okafor" class="w-8 h-8 rounded-full border border-white/10 object-cover" />
+                                        <div>
+                                            <h4 class="font-mono text-xs font-bold text-white">Amara Okafor</h4>
+                                            <p class="font-mono text-[9px] text-[#CCFF00] tracking-wider uppercase">Team Lead // Virtue</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Testimonial 4 -->
+                                <div class="testimonial-card relative p-6 rounded-[28px] bg-slate-900/50 border border-white/5 flex flex-col justify-between space-y-4 h-[220px] shrink-0 group overflow-visible">
+                                    <div class="flex justify-between items-start relative z-10">
+                                        <div class="w-8 h-8 rounded-full bg-black/60 border border-white/10 flex items-center justify-center text-[#CCFF00] shadow-[0_0_10px_rgba(204,255,0,0.15)]">
+                                            <svg class="w-3 h-3 fill-current" viewBox="0 0 24 24"><path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-4.765 2.627-4.765 5.986h5.77v9.864h-11v0zm-12 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-4.77 2.627-4.77 5.986h5.774v9.864h-11v0z"/></svg>
+                                        </div>
+                                    </div>
+                                    <p class="text-slate-300 text-xs font-light italic leading-relaxed relative z-10">
+                                        "Shayer is our go-to editor for high-stakes pitches. His motion design is sharp and has that premium modern aesthetic that our team appreciates."
+                                    </p>
+                                    <div class="flex items-center space-x-3 relative z-10">
+                                        <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=120&q=80" alt="Liam Carter" class="w-8 h-8 rounded-full border border-white/10 object-cover" />
+                                        <div>
+                                            <h4 class="font-mono text-xs font-bold text-white">Liam Carter</h4>
+                                            <p class="font-mono text-[9px] text-[#CCFF00] tracking-wider uppercase">Executive Producer // Kinetic</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Duplicated items for infinite loop -->
+                                <div class="testimonial-card relative p-6 rounded-[28px] bg-slate-900/50 border border-white/5 flex flex-col justify-between space-y-4 h-[220px] shrink-0 group overflow-visible">
+                                    <div class="flex justify-between items-start relative z-10">
+                                        <div class="w-8 h-8 rounded-full bg-black/60 border border-white/10 flex items-center justify-center text-[#CCFF00] shadow-[0_0_10px_rgba(204,255,0,0.15)]">
+                                            <svg class="w-3 h-3 fill-current" viewBox="0 0 24 24"><path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-4.765 2.627-4.765 5.986h5.77v9.864h-11v0zm-12 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-4.77 2.627-4.77 5.986h5.774v9.864h-11v0z"/></svg>
+                                        </div>
+                                    </div>
+                                    <p class="text-slate-300 text-xs font-light italic leading-relaxed relative z-10">
+                                        "He doesn't just edit; he directs. Shayer took our raw footage and arranged a compelling, high-tempo visual masterpiece that boosted our retention."
+                                    </p>
+                                    <div class="flex items-center space-x-3 relative z-10">
+                                        <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=120&q=80" alt="Amara Okafor" class="w-8 h-8 rounded-full border border-white/10 object-cover" />
+                                        <div>
+                                            <h4 class="font-mono text-xs font-bold text-white">Amara Okafor</h4>
+                                            <p class="font-mono text-[9px] text-[#CCFF00] tracking-wider uppercase">Team Lead // Virtue</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="testimonial-card relative p-6 rounded-[28px] bg-slate-900/50 border border-white/5 flex flex-col justify-between space-y-4 h-[220px] shrink-0 group overflow-visible">
+                                    <div class="flex justify-between items-start relative z-10">
+                                        <div class="w-8 h-8 rounded-full bg-black/60 border border-white/10 flex items-center justify-center text-[#CCFF00] shadow-[0_0_10px_rgba(204,255,0,0.15)]">
+                                            <svg class="w-3 h-3 fill-current" viewBox="0 0 24 24"><path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-4.765 2.627-4.765 5.986h5.77v9.864h-11v0zm-12 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-4.77 2.627-4.77 5.986h5.774v9.864h-11v0z"/></svg>
+                                        </div>
+                                    </div>
+                                    <p class="text-slate-300 text-xs font-light italic leading-relaxed relative z-10">
+                                        "Shayer is our go-to editor for high-stakes pitches. His motion design is sharp and has that premium modern aesthetic that our team appreciates."
+                                    </p>
+                                    <div class="flex items-center space-x-3 relative z-10">
+                                        <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=120&q=80" alt="Liam Carter" class="w-8 h-8 rounded-full border border-white/10 object-cover" />
+                                        <div>
+                                            <h4 class="font-mono text-xs font-bold text-white">Liam Carter</h4>
+                                            <p class="font-mono text-[9px] text-[#CCFF00] tracking-wider uppercase">Executive Producer // Kinetic</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- COLUMN 3 (Desktop Only) -->
+                        <div class="h-full overflow-visible hidden lg:flex flex-col">
+                            <div class="scroll-col-3 flex flex-col gap-4">
+                                <!-- Testimonial 5 -->
+                                <div class="testimonial-card relative p-6 rounded-[28px] bg-slate-900/50 border border-white/5 flex flex-col justify-between space-y-4 h-[220px] shrink-0 group overflow-visible">
+                                    <div class="flex justify-between items-start relative z-10">
+                                        <div class="w-8 h-8 rounded-full bg-black/60 border border-white/10 flex items-center justify-center text-[#CCFF00] shadow-[0_0_10px_rgba(204,255,0,0.15)]">
+                                            <svg class="w-3 h-3 fill-current" viewBox="0 0 24 24"><path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-4.765 2.627-4.765 5.986h5.77v9.864h-11v0zm-12 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-4.77 2.627-4.77 5.986h5.774v9.864h-11v0z"/></svg>
+                                        </div>
+                                    </div>
+                                    <p class="text-slate-300 text-xs font-light italic leading-relaxed relative z-10">
+                                        "Feedback loops skyrocketed once Shayer joined our production team. His communication is fast, clear, and turnaround times are remarkable."
+                                    </p>
+                                    <div class="flex items-center space-x-3 relative z-10">
+                                        <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=120&q=80" alt="Elena Rostova" class="w-8 h-8 rounded-full border border-white/10 object-cover" />
+                                        <div>
+                                            <h4 class="font-mono text-xs font-bold text-white">Elena Rostova</h4>
+                                            <p class="font-mono text-[9px] text-[#CCFF00] tracking-wider uppercase">CSM Director // Phantom</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Testimonial 6 -->
+                                <div class="testimonial-card relative p-6 rounded-[28px] bg-slate-900/50 border border-white/5 flex flex-col justify-between space-y-4 h-[220px] shrink-0 group overflow-visible">
+                                    <div class="flex justify-between items-start relative z-10">
+                                        <div class="w-8 h-8 rounded-full bg-black/60 border border-white/10 flex items-center justify-center text-[#CCFF00] shadow-[0_0_10px_rgba(204,255,0,0.15)]">
+                                            <svg class="w-3 h-3 fill-current" viewBox="0 0 24 24"><path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-4.765 2.627-4.765 5.986h5.77v9.864h-11v0zm-12 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-4.77 2.627-4.77 5.986h5.774v9.864h-11v0z"/></svg>
+                                        </div>
+                                    </div>
+                                    <p class="text-slate-300 text-xs font-light italic leading-relaxed relative z-10">
+                                        "Shayer brings a rare blend of technical animation awareness and pure storytelling instinct. The reels he cut for our team perform exceptionally well."
+                                    </p>
+                                    <div class="flex items-center space-x-3 relative z-10">
+                                        <img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=120&q=80" alt="Marcus Vance" class="w-8 h-8 rounded-full border border-white/10 object-cover" />
+                                        <div>
+                                            <h4 class="font-mono text-xs font-bold text-white">Marcus Vance</h4>
+                                            <p class="font-mono text-[9px] text-[#CCFF00] tracking-wider uppercase">Product Lead // Eight Co</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Duplicated items for infinite loop -->
+                                <div class="testimonial-card relative p-6 rounded-[28px] bg-slate-900/50 border border-white/5 flex flex-col justify-between space-y-4 h-[220px] shrink-0 group overflow-visible">
+                                    <div class="flex justify-between items-start relative z-10">
+                                        <div class="w-8 h-8 rounded-full bg-black/60 border border-white/10 flex items-center justify-center text-[#CCFF00] shadow-[0_0_10px_rgba(204,255,0,0.15)]">
+                                            <svg class="w-3 h-3 fill-current" viewBox="0 0 24 24"><path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-4.765 2.627-4.765 5.986h5.77v9.864h-11v0zm-12 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-4.77 2.627-4.77 5.986h5.774v9.864h-11v0z"/></svg>
+                                        </div>
+                                    </div>
+                                    <p class="text-slate-300 text-xs font-light italic leading-relaxed relative z-10">
+                                        "Feedback loops skyrocketed once Shayer joined our production team. His communication is fast, clear, and turnaround times are remarkable."
+                                    </p>
+                                    <div class="flex items-center space-x-3 relative z-10">
+                                        <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=120&q=80" alt="Elena Rostova" class="w-8 h-8 rounded-full border border-white/10 object-cover" />
+                                        <div>
+                                            <h4 class="font-mono text-xs font-bold text-white">Elena Rostova</h4>
+                                            <p class="font-mono text-[9px] text-[#CCFF00] tracking-wider uppercase">CSM Director // Phantom</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="testimonial-card relative p-6 rounded-[28px] bg-slate-900/50 border border-white/5 flex flex-col justify-between space-y-4 h-[220px] shrink-0 group overflow-visible">
+                                    <div class="flex justify-between items-start relative z-10">
+                                        <div class="w-8 h-8 rounded-full bg-black/60 border border-white/10 flex items-center justify-center text-[#CCFF00] shadow-[0_0_10px_rgba(204,255,0,0.15)]">
+                                            <svg class="w-3 h-3 fill-current" viewBox="0 0 24 24"><path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-4.765 2.627-4.765 5.986h5.77v9.864h-11v0zm-12 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-4.77 2.627-4.77 5.986h5.774v9.864h-11v0z"/></svg>
+                                        </div>
+                                    </div>
+                                    <p class="text-slate-300 text-xs font-light italic leading-relaxed relative z-10">
+                                        "Shayer brings a rare blend of technical animation awareness and pure storytelling instinct. The reels he cut for our team perform exceptionally well."
+                                    </p>
+                                    <div class="flex items-center space-x-3 relative z-10">
+                                        <img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=120&q=80" alt="Marcus Vance" class="w-8 h-8 rounded-full border border-white/10 object-cover" />
+                                        <div>
+                                            <h4 class="font-mono text-xs font-bold text-white">Marcus Vance</h4>
+                                            <p class="font-mono text-[9px] text-[#CCFF00] tracking-wider uppercase">Product Lead // Eight Co</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION: COLLABORATIVE BRANDS MONOGRAM CAROUSEL (Customize later) -->
+            <section class="space-y-4 pt-4 overflow-hidden relative">
+                <div class="border-t border-white/5 pt-12">
+                    <span class="font-mono text-[10px] text-slate-500 uppercase tracking-[0.2em] block text-center mb-8">PARTNERED CREATIVE LABS & BRANDS</span>
+                    <div class="relative w-full overflow-hidden py-6 bg-white/[0.01] border-y border-white/[0.03]">
+                        <div class="marquee-container whitespace-nowrap">
+                            <!-- Block 1 -->
+                            <div class="inline-flex items-center space-x-12">
+                                <span class="font-mono text-xl sm:text-2xl font-bold tracking-[0.3em] text-slate-600 hover:text-[#CCFF00] transition-colors cursor-crosshair px-6">AETHER</span>
+                                <span class="w-1.5 h-1.5 rounded-full bg-slate-800"></span>
+                                <span class="font-mono text-xl sm:text-2xl font-bold tracking-[0.3em] text-slate-600 hover:text-[#CCFF00] transition-colors cursor-crosshair px-6">MONOLITH</span>
+                                <span class="w-1.5 h-1.5 rounded-full bg-slate-800"></span>
+                                <span class="font-mono text-xl sm:text-2xl font-bold tracking-[0.3em] text-slate-600 hover:text-[#CCFF00] transition-colors cursor-crosshair px-6">VIRTUE</span>
+                                <span class="w-1.5 h-1.5 rounded-full bg-slate-800"></span>
+                                <span class="font-mono text-xl sm:text-2xl font-bold tracking-[0.3em] text-slate-600 hover:text-[#CCFF00] transition-colors cursor-crosshair px-6">KINETIC</span>
+                                <span class="w-1.5 h-1.5 rounded-full bg-slate-800"></span>
+                                <span class="font-mono text-xl sm:text-2xl font-bold tracking-[0.3em] text-slate-600 hover:text-[#CCFF00] transition-colors cursor-crosshair px-6">NEURAL_STUDIOS</span>
+                                <span class="w-1.5 h-1.5 rounded-full bg-slate-800"></span>
+                                <span class="font-mono text-xl sm:text-2xl font-bold tracking-[0.3em] text-slate-600 hover:text-[#CCFF00] transition-colors cursor-crosshair px-6">EIGHT_CO</span>
+                                <span class="w-1.5 h-1.5 rounded-full bg-slate-800"></span>
+                                <span class="font-mono text-xl sm:text-2xl font-bold tracking-[0.3em] text-slate-600 hover:text-[#CCFF00] transition-colors cursor-crosshair px-6">PHANTOM</span>
+                                <span class="w-1.5 h-1.5 rounded-full bg-slate-800"></span>
+                            </div>
+                            <!-- Block 2 (Seamless replication) -->
+                            <div class="inline-flex items-center space-x-12">
+                                <span class="font-mono text-xl sm:text-2xl font-bold tracking-[0.3em] text-slate-600 hover:text-[#CCFF00] transition-colors cursor-crosshair px-6">AETHER</span>
+                                <span class="w-1.5 h-1.5 rounded-full bg-slate-800"></span>
+                                <span class="font-mono text-xl sm:text-2xl font-bold tracking-[0.3em] text-slate-600 hover:text-[#CCFF00] transition-colors cursor-crosshair px-6">MONOLITH</span>
+                                <span class="w-1.5 h-1.5 rounded-full bg-slate-800"></span>
+                                <span class="font-mono text-xl sm:text-2xl font-bold tracking-[0.3em] text-slate-600 hover:text-[#CCFF00] transition-colors cursor-crosshair px-6">VIRTUE</span>
+                                <span class="w-1.5 h-1.5 rounded-full bg-slate-800"></span>
+                                <span class="font-mono text-xl sm:text-2xl font-bold tracking-[0.3em] text-slate-600 hover:text-[#CCFF00] transition-colors cursor-crosshair px-6">KINETIC</span>
+                                <span class="w-1.5 h-1.5 rounded-full bg-slate-800"></span>
+                                <span class="font-mono text-xl sm:text-2xl font-bold tracking-[0.3em] text-slate-600 hover:text-[#CCFF00] transition-colors cursor-crosshair px-6">NEURAL_STUDIOS</span>
+                                <span class="w-1.5 h-1.5 rounded-full bg-slate-800"></span>
+                                <span class="font-mono text-xl sm:text-2xl font-bold tracking-[0.3em] text-slate-600 hover:text-[#CCFF00] transition-colors cursor-crosshair px-6">EIGHT_CO</span>
+                                <span class="w-1.5 h-1.5 rounded-full bg-slate-800"></span>
+                                <span class="font-mono text-xl sm:text-2xl font-bold tracking-[0.3em] text-slate-600 hover:text-[#CCFF00] transition-colors cursor-crosshair px-6">PHANTOM</span>
+                                <span class="w-1.5 h-1.5 rounded-full bg-slate-800"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION: INLINE CONTACT / EMAIL -->
+            <section class="space-y-8" id="contact-section">
+                <div class="flex flex-col border-b border-white/5 pb-6">
+                    <span class="font-mono text-xs text-[#CCFF00] uppercase tracking-widest">INQUIRE DIRECT</span>
+                    <h2 class="text-2xl sm:text-3xl font-light text-white mt-1">Get in Touch</h2>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+                    <!-- Left Copy / Details -->
+                    <div class="lg:col-span-5 space-y-6">
+                        <p class="text-slate-400 text-sm leading-relaxed font-light">
+                            If you're seeking customized video setups, interactive media integrations, or looking to discuss creative direction for an upcoming product launch:
+                        </p>
+                        
+                        <div class="space-y-4">
+                            <a href="mailto:hello.shayer@gmail.com" class="group flex items-center space-x-4 p-4 rounded-2xl bg-white/[0.01] border border-white/5 hover:border-[#CCFF00]/40 transition-all">
+                                <div class="w-10 h-10 rounded-full bg-white/[0.02] flex items-center justify-center text-slate-400 group-hover:text-[#CCFF00] transition-colors">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
+                                    </svg>
+                                </div>
+                                <div>
+                                    <span class="block font-mono text-sm group-hover:text-[#CCFF00] transition-colors">hello.shayer@gmail.com</span>
+                                </div>
+                            </a>
+
+                            <div class="flex items-center space-x-4 p-4 rounded-2xl bg-white/[0.01] border border-white/5">
+                                <div class="w-10 h-10 rounded-full bg-white/[0.02] flex items-center justify-center text-slate-400">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25s-7.5-4.108-7.5-11.25a7.5 7.5 0 1119.5 10.5z" />
+                                    </svg>
+                                </div>
+                                <div>
+                                    <span class="block font-mono text-[9px] text-slate-500 uppercase tracking-widest">OFFICE DIRECT</span>
+                                    <span class="font-mono text-sm text-slate-200">Dhaka, Bangladesh</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right Quick Form -->
+                    <div class="lg:col-span-7">
+                        <form id="contact-form" onsubmit="handleFormSubmit(event)" class="premium-card p-8 rounded-3xl space-y-4">
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                <div class="space-y-1.5">
+                                    <label class="block font-mono text-[10px] text-slate-500 uppercase">Your Name</label>
+                                    <input type="text" id="form-name" required class="w-full bg-white/[0.02] text-white font-mono text-xs px-4 py-3 rounded-xl border border-white/10 focus:border-[#CCFF00] focus:outline-none transition-colors" placeholder="e.g. Satoshi">
+                                </div>
+                                <div class="space-y-1.5">
+                                    <label class="block font-mono text-[10px] text-slate-500 uppercase">Your Email</label>
+                                    <input type="email" id="form-email" required class="w-full bg-white/[0.02] text-white font-mono text-xs px-4 py-3 rounded-xl border border-white/10 focus:border-[#CCFF00] focus:outline-none transition-colors" placeholder="e.g. user@domain.com">
+                                </div>
+                            </div>
+                            <div class="space-y-1.5">
+                                <label class="block font-mono text-[10px] text-slate-500 uppercase">Message</label>
+                                <textarea id="form-message" rows="4" required class="w-full bg-white/[0.02] text-white font-mono text-xs p-4 rounded-xl border border-white/10 focus:border-[#CCFF00] focus:outline-none transition-colors resize-none" placeholder="Write details about your vision here..."></textarea>
+                            </div>
+                            <button type="submit" class="w-full py-4 rounded-xl bg-[#CCFF00] text-black font-mono text-xs font-bold uppercase tracking-wider hover:bg-white hover:text-black hover:shadow-[0_0_25px_rgba(204,255,0,0.3)] transition-all">
+                                SEND MESSAGE INQUIRY
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+
+        <!-- FOOTER -->
+        <footer class="w-full py-12 border-t border-white/5 flex flex-col sm:flex-row justify-between items-center text-[10px] font-mono text-slate-500 gap-4">
+            <span>© 2026 SHAYER // CREATIVE MOTION ARCHIVE</span>
+            <div class="flex items-center space-x-6">
+                <span>ALL WORK ENGLISH ACCESSIBLE</span>
+                <span class="w-2 h-2 rounded-full bg-[#CCFF00]"></span>
+            </div>
+        </footer>
+
+    </div>
+
+    <!-- PERSISTENT FLOATING ACTIONS CONTACT HUB (FAB) -->
+    <div class="fixed bottom-6 right-6 z-40 flex flex-col items-end space-y-3">
+        <!-- Floating Options Panel -->
+        <div id="fab-options" class="flex flex-col space-y-2 opacity-0 translate-y-4 pointer-events-none transition-all duration-300">
+            <!-- WhatsApp option -->
+            <a id="fab-whatsapp-button" href="https://wa.me/8801700000000" target="_blank" rel="noopener noreferrer" class="flex items-center space-x-2 bg-[#25D366] text-white px-5 py-3 rounded-full shadow-[0_4px_15px_rgba(37,211,102,0.3)] hover:scale-105 hover:bg-[#20ba5a] transition-all duration-300 text-[10px] font-mono font-bold tracking-wider uppercase">
+                <!-- WhatsApp SVG icon -->
+                <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L0 24l6.335-1.662c1.746.953 3.71 1.458 5.704 1.459h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+                </svg>
+                <span>WhatsApp</span>
+            </a>
+            <!-- Direct Email option -->
+            <a href="mailto:hello.shayer@gmail.com" class="flex items-center space-x-2 bg-white text-black px-5 py-3 rounded-full shadow-[0_4px_15px_rgba(255,255,255,0.15)] hover:scale-105 transition-all duration-300 text-[10px] font-mono font-bold tracking-wider uppercase">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
+                </svg>
+                <span>Direct Email</span>
+            </a>
+        </div>
+        <!-- Trigger Button -->
+        <button onclick="toggleFabMenu()" id="fab-trigger" class="flex items-center space-x-2 bg-[#CCFF00] text-black px-6 py-4 rounded-full shadow-[0_0_25px_rgba(204,255,0,0.45)] hover:shadow-[0_0_35px_rgba(204,255,0,0.7)] hover:scale-105 transition-all duration-300 z-50 group font-mono text-xs font-bold uppercase tracking-wider">
+            <span id="fab-icon-container" class="transition-transform duration-300">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M8.625 12a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H8.25m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H12m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0h-.375M21 12c0 4.556-4.03 8.25-9 8.25a9.764 9.764 0 01-2.555-.337A5.972 5.972 0 015.41 20.97a5.969 5.969 0 01-.474-.065 4.48 4.48 0 00.978-2.025c.09-.457-.133-.901-.467-1.226C3.93 16.178 3 14.189 3 12c0-4.556 4.03-8.25 9-8.25s9 3.694 9 8.25z" />
+                </svg>
+            </span>
+            <span>Contact Me</span>
+        </button>
+    </div>
+
+    <!-- CONFIGURATION DRAWER -->
+    <div id="drawer-panel" class="fixed top-0 right-0 h-full w-full max-w-md bg-[#090b0e] border-l border-white/5 z-50 transform translate-x-full drawer-transition flex flex-col shadow-[0_0_80px_rgba(0,0,0,0.8)]">
+        <!-- Drawer Header -->
+        <div class="p-8 border-b border-white/5 flex justify-between items-center">
+            <div>
+                <h3 class="font-mono text-sm font-bold text-white tracking-widest uppercase">PLAYBACK MANAGER</h3>
+                <p class="font-mono text-[10px] text-slate-400 mt-1">UPDATE CURRENT VIDEO SOURCE LINKS</p>
+            </div>
+            <button onclick="toggleDrawer(false)" class="text-slate-400 hover:text-white transition-colors border border-white/10 p-2 rounded-full hover:border-white/25">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+            </button>
+        </div>
+
+        <!-- Scrollable settings form -->
+        <div class="flex-grow overflow-y-auto p-8 space-y-8">
+            <!-- Floating Contact Hub settings -->
+            <div class="space-y-4">
+                <h4 class="font-mono text-xs text-[#CCFF00] font-bold uppercase tracking-wider">CONTACT & INTRO TELEMETRY</h4>
+                <div class="space-y-3">
+                    <div class="space-y-1.5">
+                        <label class="block font-mono text-[10px] text-slate-500 uppercase">WhatsApp Number (With Country Code)</label>
+                        <input type="text" id="input-whatsapp-num" class="w-full bg-white/[0.02] text-white font-mono text-xs px-3 py-2.5 rounded-lg border border-white/10 focus:border-[#CCFF00] focus:outline-none" placeholder="e.g. 8801700000000">
+                    </div>
+                    <div class="space-y-1.5">
+                        <label class="block font-mono text-[10px] text-slate-500 uppercase">Intro Video YouTube ID</label>
+                        <input type="text" id="input-intro-video-id" class="w-full bg-white/[0.02] text-white font-mono text-xs px-3 py-2.5 rounded-lg border border-white/10 focus:border-[#CCFF00] focus:outline-none" placeholder="e.g. y6120Q5iUAc">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Long Videos Section Inputs -->
+            <div class="space-y-4">
+                <h4 class="font-mono text-xs text-[#CCFF00] font-bold uppercase tracking-wider">LONG VIDEOS (9 IDS)</h4>
+                <div id="drawer-long-inputs" class="space-y-3">
+                    <!-- Dynamic fields -->
+                </div>
+            </div>
+
+            <!-- Reels Videos Section Inputs -->
+            <div class="space-y-4">
+                <h4 class="font-mono text-xs text-[#CCFF00] font-bold uppercase tracking-wider">REELS / SHORTS (4 IDS)</h4>
+                <div id="drawer-short-inputs" class="space-y-3">
+                    <!-- Dynamic fields -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Actions -->
+        <div class="p-8 border-t border-white/5 bg-[#07090d] grid grid-cols-2 gap-4">
+            <button onclick="resetGridToDefault()" class="py-3.5 px-2 rounded-full bg-transparent border border-white/10 hover:border-white/30 text-slate-300 font-mono text-xs transition-all">
+                RESET TO DEFAULTS
+            </button>
+            <button onclick="saveGridConfig()" class="py-3.5 px-2 rounded-full bg-[#CCFF00] text-black hover:bg-white font-mono text-xs font-bold transition-all">
+                COMPILE LINKS
+            </button>
+        </div>
+    </div>
+
+    <!-- VIDEO LIGHTBOX OVERLAY MODAL -->
+    <div id="video-lightbox" class="fixed inset-0 bg-[#06080c]/95 z-50 flex items-center justify-center p-4 sm:p-8 hidden opacity-0 transition-opacity duration-300" onclick="closeLightbox()">
+        <!-- Close Button -->
+        <button onclick="closeLightbox(); event.stopPropagation();" class="absolute top-6 right-6 text-slate-400 hover:text-white hover:scale-110 transition-transform p-3 rounded-full border border-white/10 bg-white/5 hover:border-[#CCFF00]/50 z-50">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+        </button>
+        <!-- Dynamic Frame Area -->
+        <div class="w-full max-w-4xl transition-transform duration-300 transform scale-95" id="lightbox-content" onclick="event.stopPropagation()">
+            <!-- Loaded frame here -->
+        </div>
+    </div>
+
+    <!-- NON-BLOCKING TOAST STACK -->
+    <div id="toast-wrapper" class="fixed top-24 right-6 sm:right-12 z-50 flex flex-col space-y-3 pointer-events-none"></div>
+
+    <!-- MAIN CONTROL & RENDERING MODULE -->
+    <script>
+        // Default Horizontal Loops
+        const DEFAULT_LONG_VIDS = [
+            "q76bMs-NwRk", // Cyberpunk alley
+            "H5nE_u5mKTo", // Cyber city aerial
+            "y6120Q5iUAc", // Retro sunset
+            "j_gN3Iq02Yg", // Neon spaceship corridor
+            "b794E7Zf788", // Futuristic telemetry interface
+            "S160_B15w_M", // Vapor grid matrix
+            "FzYv_A6oG3c", // Cyber punk visual loop
+            "K6T_Cj_eSyk", // Reactor core
+            "u9C_f7V_8F8"  // Space tunnel
+        ];
+
+        // Default Vertical Loops
+        const DEFAULT_SHORT_VIDS = [
+            "q76bMs-NwRk", // Cyberpunk alley
+            "y6120Q5iUAc", // Retro sunset
+            "j_gN3Iq02Yg", // Neon space corridor
+            "u9C_f7V_8F8"  // Hyper space tunnel
+        ];
+
+        // Default WhatsApp Configuration
+        const DEFAULT_WHATSAPP = "8801700000000";
+        const DEFAULT_INTRO_VIDEO = "y6120Q5iUAc"; // Loop retro sunset as default intro
+
+        let activeLongVideos = [];
+        let activeShortVideos = [];
+        let activeWhatsAppNumber = DEFAULT_WHATSAPP;
+        let activeIntroVideo = DEFAULT_INTRO_VIDEO;
+        let logoClickCount = 0;
+
+        // Load configuration datasets
+        function loadConfigurations() {
+            const storedLong = localStorage.getItem("kae_long_videos");
+            const storedShort = localStorage.getItem("kae_short_videos");
+            const storedWhatsApp = localStorage.getItem("kae_whatsapp_number");
+            const storedIntro = localStorage.getItem("kae_intro_video");
+
+            if (storedLong) {
+                try { activeLongVideos = JSON.parse(storedLong); } catch(e) { activeLongVideos = [...DEFAULT_LONG_VIDS]; }
+            } else {
+                activeLongVideos = [...DEFAULT_LONG_VIDS];
+            }
+
+            if (storedShort) {
+                try { activeShortVideos = JSON.parse(storedShort); } catch(e) { activeShortVideos = [...DEFAULT_SHORT_VIDS]; }
+            } else {
+                activeShortVideos = [...DEFAULT_SHORT_VIDS];
+            }
+
+            if (storedWhatsApp) {
+                activeWhatsAppNumber = storedWhatsApp;
+            } else {
+                activeWhatsAppNumber = DEFAULT_WHATSAPP;
+            }
+
+            if (storedIntro) {
+                activeIntroVideo = storedIntro;
+            } else {
+                activeIntroVideo = DEFAULT_INTRO_VIDEO;
+            }
+
+            updateWhatsAppButtonLink();
+        }
+
+        // Stealth Admin Handler: Clicking your logo 5 times opens the drawer
+        function handleAdminTrigger() {
+            logoClickCount++;
+            if (logoClickCount === 1) {
+                // reset count if no successive clicks happen in 3 seconds
+                setTimeout(() => { logoClickCount = 0; }, 3000);
+            }
+            
+            if (logoClickCount >= 5) {
+                logoClickCount = 0;
+                toggleDrawer(true);
+                showToast("Admin session unlocked", "success");
+            } else {
+                // Subtle hint for Shayer (can be ignored by public)
+                showToast(`Unlock progress: ${logoClickCount}/5`, "info");
+            }
+        }
+
+        // Apply loaded/configured WhatsApp deep link to floating badge
+        function updateWhatsAppButtonLink() {
+            const btn = document.getElementById("fab-whatsapp-button");
+            const textMsg = encodeURIComponent("Hi Shayer, I saw your video production portfolio and I would love to connect about a project!");
+            btn.href = `https://wa.me/${activeWhatsAppNumber}?text=${textMsg}`;
+        }
+
+        // Render Horizontal Long Videos with transparent click overlays
+        function renderLongVideos() {
+            const container = document.getElementById("long-videos-container");
+            container.innerHTML = "";
+
+            activeLongVideos.forEach((vidId, index) => {
+                const cell = document.createElement("div");
+                cell.className = "grid-item-target relative overflow-hidden bg-[#0d1017] border border-white/10 rounded-2xl aspect-video cursor-pointer";
+                
+                const embedUrl = `https://www.youtube.com/embed/${vidId}?autoplay=1&mute=1&loop=1&playlist=${vidId}&controls=0&playsinline=1&modestbranding=1&enablejsapi=1`;
+
+                cell.innerHTML = `
+                    <iframe 
+                        class="absolute inset-0 w-full h-full object-cover scale-[1.02] pointer-events-none" 
+                        src="${embedUrl}" 
+                        title="Long play ${index + 1}" 
+                        frameborder="0" 
+                        allow="autoplay; encrypted-media" 
+                        allowfullscreen>
+                    </iframe>
+                    <!-- Capture Click Overlay to activate high stage modal -->
+                    <div onclick="openLightbox('${vidId}', false)" class="absolute inset-0 z-10 hover:bg-black/10 transition-colors"></div>
+                    <div class="absolute bottom-3 left-3 font-mono text-[9px] text-white bg-black/80 px-2.5 py-1 rounded-full border border-white/10 pointer-events-none z-20">
+                        PLAY // L_${index + 1}
+                    </div>
+                `;
+                container.appendChild(cell);
+            });
+        }
+
+        // Render Vertical Reels / Shorts with transparent click overlays
+        function renderShortVideos() {
+            const container = document.getElementById("shorts-container");
+            container.innerHTML = "";
+
+            activeShortVideos.forEach((vidId, index) => {
+                const cell = document.createElement("div");
+                cell.className = "grid-item-target relative overflow-hidden bg-[#0d1017] border border-white/10 rounded-2xl aspect-[9/16] cursor-pointer";
+
+                const embedUrl = `https://www.youtube.com/embed/${vidId}?autoplay=1&mute=1&loop=1&playlist=${vidId}&controls=0&playsinline=1&modestbranding=1&enablejsapi=1`;
+
+                cell.innerHTML = `
+                    <iframe 
+                        class="absolute inset-0 w-full h-full object-cover scale-[1.02] pointer-events-none" 
+                        src="${embedUrl}" 
+                        title="Short play ${index + 1}" 
+                        frameborder="0" 
+                        allow="autoplay; encrypted-media" 
+                        allowfullscreen>
+                    </iframe>
+                    <!-- Capture Click Overlay to activate high stage modal -->
+                    <div onclick="openLightbox('${vidId}', true)" class="absolute inset-0 z-10 hover:bg-black/10 transition-colors"></div>
+                    <div class="absolute bottom-3 left-3 font-mono text-[9px] text-white bg-black/80 px-2.5 py-1 rounded-full border border-white/10 pointer-events-none z-20">
+                        REEL // S_${index + 1}
+                    </div>
+                `;
+                container.appendChild(cell);
+            });
+        }
+
+        // LIGHTBOX ENGINE (Opens video dynamically, supports sound on direct interaction)
+        function openLightbox(videoId, isVertical) {
+            const lightbox = document.getElementById("video-lightbox");
+            const content = document.getElementById("lightbox-content");
+            
+            // Set autoplay with standard controls and full sound enabled
+            const finalUrl = `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=0&controls=1&modestbranding=1&rel=0`;
+
+            // Adjust aspect ratios dynamically based on orientation
+            if (isVertical) {
+                content.className = "w-full max-w-sm aspect-[9/16] h-[85vh] transition-transform duration-300 transform scale-95 mx-auto bg-black rounded-3xl overflow-hidden border border-white/10";
+            } else {
+                content.className = "w-full max-w-5xl aspect-video transition-transform duration-300 transform scale-95 mx-auto bg-black rounded-3xl overflow-hidden border border-white/10";
+            }
+
+            content.innerHTML = `
+                <iframe class="w-full h-full" src="${finalUrl}" frameborder="0" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>
+            `;
+
+            lightbox.classList.remove("hidden");
+            // Micro animation delay
+            setTimeout(() => {
+                lightbox.classList.remove("opacity-0");
+                content.classList.remove("scale-95");
+                content.classList.add("scale-100");
+            }, 50);
+
+            showToast("Expanding video stage", "info");
+        }
+
+        // CLOSE WINDOW POPUP
+        function closeLightbox() {
+            const lightbox = document.getElementById("video-lightbox");
+            const content = document.getElementById("lightbox-content");
+
+            lightbox.classList.add("opacity-0");
+            content.classList.remove("scale-100");
+            content.classList.add("scale-95");
+
+            setTimeout(() => {
+                lightbox.classList.add("hidden");
+                content.innerHTML = ""; // Tear down player iframe
+            }, 300);
+        }
+
+        // FLOATING CONTACT HUB CONTROL LOGIC (FAB Toggle)
+        let isFabOpen = false;
+        function toggleFabMenu() {
+            const optionsPanel = document.getElementById("fab-options");
+            const triggerIcon = document.getElementById("fab-icon-container");
+            isFabOpen = !isFabOpen;
+
+            if (isFabOpen) {
+                optionsPanel.classList.remove("opacity-0", "translate-y-4", "pointer-events-none");
+                triggerIcon.classList.add("rotate-90");
+                showToast("Connection channels opened", "info");
+            } else {
+                optionsPanel.classList.add("opacity-0", "translate-y-4", "pointer-events-none");
+                triggerIcon.classList.remove("rotate-90");
+            }
+        }
+
+        // Close FAB overlay if user clicks anywhere else
+        window.addEventListener("click", function(e) {
+            const fabContainer = document.getElementById("fab-trigger");
+            const optionsPanel = document.getElementById("fab-options");
+            const adminTrigger = document.querySelector('[onclick="handleAdminTrigger()"]');
+            if (isFabOpen && !fabContainer.contains(e.target) && !optionsPanel.contains(e.target)) {
+                toggleFabMenu();
+            }
+        });
+
+        // Configure Input Forms inside Drawer
+        function buildDrawerInputs() {
+            // Update WhatsApp input box and Intro Video input values
+            document.getElementById("input-whatsapp-num").value = activeWhatsAppNumber;
+            document.getElementById("input-intro-video-id").value = activeIntroVideo;
+
+            const longContainer = document.getElementById("drawer-long-inputs");
+            longContainer.innerHTML = "";
+            activeLongVideos.forEach((vidId, index) => {
+                const item = document.createElement("div");
+                item.className = "flex items-center justify-between gap-3";
+                item.innerHTML = `
+                    <span class="font-mono text-[10px] text-slate-500 w-12">L_0${index + 1}</span>
+                    <input type="text" id="input-long-${index}" value="${vidId}" class="flex-grow bg-white/[0.02] text-white font-mono text-xs px-3 py-2 rounded-lg border border-white/10 focus:border-[#CCFF00] focus:outline-none" maxlength="11">
+                `;
+                longContainer.appendChild(item);
+            });
+
+            const shortContainer = document.getElementById("drawer-short-inputs");
+            shortContainer.innerHTML = "";
+            activeShortVideos.forEach((vidId, index) => {
+                const item = document.createElement("div");
+                item.className = "flex items-center justify-between gap-3";
+                item.innerHTML = `
+                    <span class="font-mono text-[10px] text-slate-500 w-12">S_0${index + 1}</span>
+                    <input type="text" id="input-short-${index}" value="${vidId}" class="flex-grow bg-white/[0.02] text-white font-mono text-xs px-3 py-2 rounded-lg border border-white/10 focus:border-[#CCFF00] focus:outline-none" maxlength="11">
+                `;
+                shortContainer.appendChild(item);
+            });
+        }
+
+        function toggleDrawer(open) {
+            const drawer = document.getElementById("drawer-panel");
+            if (open) {
+                buildDrawerInputs();
+                drawer.classList.remove("translate-x-full");
+            } else {
+                drawer.classList.add("translate-x-full");
+            }
+        }
+
+        // Save active video lists & settings to storage and reload arrays
+        function saveGridConfig() {
+            // Validate WhatsApp Number Input
+            const whatsappInput = document.getElementById("input-whatsapp-num").value.trim().replace(/\D/g,'');
+            if (whatsappInput.length < 7) {
+                showToast("Error: Please enter a valid WhatsApp phone number", "error");
+                return;
+            }
+
+            // Validate Intro Video YouTube ID
+            const introInput = document.getElementById("input-intro-video-id").value.trim();
+            if (introInput.length !== 11) {
+                showToast("Error: Intro Video ID must be exactly 11 characters", "error");
+                return;
+            }
+
+            const newLongs = [];
+            for (let i = 0; i < activeLongVideos.length; i++) {
+                const val = document.getElementById(`input-long-${i}`).value.trim();
+                if (val.length === 11) {
+                    newLongs.push(val);
+                } else {
+                    showToast("Error: Long Video index must be an 11-digit ID", "error");
+                    return;
+                }
+            }
+
+            const newShorts = [];
+            for (let i = 0; i < activeShortVideos.length; i++) {
+                const val = document.getElementById(`input-short-${i}`).value.trim();
+                if (val.length === 11) {
+                    newShorts.push(val);
+                } else {
+                    showToast("Error: Short Video index must be an 11-digit ID", "error");
+                    return;
+                }
+            }
+
+            activeLongVideos = newLongs;
+            activeShortVideos = newShorts;
+            activeWhatsAppNumber = whatsappInput;
+            activeIntroVideo = introInput;
+
+            localStorage.setItem("kae_long_videos", JSON.stringify(activeLongVideos));
+            localStorage.setItem("kae_short_videos", JSON.stringify(activeShortVideos));
+            localStorage.setItem("kae_whatsapp_number", activeWhatsAppNumber);
+            localStorage.setItem("kae_intro_video", activeIntroVideo);
+
+            updateWhatsAppButtonLink();
+            renderLongVideos();
+            renderShortVideos();
+            toggleDrawer(false);
+            showToast("Configurations compiled & saved", "success");
+        }
+
+        // Reset to original defaults
+        function resetGridToDefault() {
+            localStorage.removeItem("kae_long_videos");
+            localStorage.removeItem("kae_short_videos");
+            localStorage.removeItem("kae_whatsapp_number");
+            localStorage.removeItem("kae_intro_video");
+
+            activeLongVideos = [...DEFAULT_LONG_VIDS];
+            activeShortVideos = [...DEFAULT_SHORT_VIDS];
+            activeWhatsAppNumber = DEFAULT_WHATSAPP;
+            activeIntroVideo = DEFAULT_INTRO_VIDEO;
+
+            updateWhatsAppButtonLink();
+            renderLongVideos();
+            renderShortVideos();
+            toggleDrawer(false);
+            showToast("System reverted to initial states", "success");
+        }
+
+        // Handle Direct Contact Message Submission
+        function handleFormSubmit(event) {
+            event.preventDefault();
+            const name = document.getElementById("form-name").value;
+            const email = document.getElementById("form-email").value;
+            const message = document.getElementById("form-message").value;
+
+            showToast("Opening secure mail portal...", "info");
+
+            setTimeout(() => {
+                const subject = encodeURIComponent(`Video Project Inquiry from ${name}`);
+                const body = encodeURIComponent(`Hi Shayer,\n\n${message}\n\nMy email is: ${email}`);
+                window.location.href = `mailto:hello.shayer@gmail.com?subject=${subject}&body=${body}`;
+                
+                document.getElementById("contact-form").reset();
+                showToast("Inquiry recorded successfully", "success");
+            }, 1000);
+        }
+
+        // Dynamic Dossier / Resume text download
+        function downloadResume() {
+            showToast("Assembling career dossier...", "info");
+
+            const resumeContent = `========================================================================
+                         SHAYER - CV / DOSSIER
+                  CREATIVE DIRECTOR & VIDEO EDITING ARCHITECT
+========================================================================
+
+LOCATION: Dhaka, Bangladesh
+CONTACT INBOX: hello.shayer@gmail.com
+LINKEDIN: https://www.linkedin.com/in/shayertheone/
+EXPERIENCE: 4 Years (Video Editing & Creative Motion Design)
+
+------------------------------------------------------------------------
+[1] CREATIVE FOCUS & MISSION
+------------------------------------------------------------------------
+Bringing exceptional pacing, high-fidelity visual structure, and motion 
+precision to modern screens. Building seamless visual frameworks that
+bridge client brands with interactive cinematic storytelling.
+
+------------------------------------------------------------------------
+[2] PRODUCTION TECHNOLOGY CAPABILITIES
+------------------------------------------------------------------------
+* CINEMATOGRAPHY / MOTION: Unreal Engine 5, DaVinci Resolve Studio, AE, C4D
+* WEB INTEGRATION: HTML5, CSS3, Tailwind CSS, JS ES6, Canvas API
+
+------------------------------------------------------------------------
+[3] KEY CAREER EXPERIENCES & MILESTONES
+------------------------------------------------------------------------
+* CREATIVE DIRECTOR & EDIT LEAD (2022 - Present)
+  Pioneered lightweight multi-iframe stream decoders, reducing stream 
+  lag metrics by 44% across mobile terminals. Designed interactive virtual 
+  production sets integrating Web3 data layers.
+
+* MOTION DESIGN SPECIALIST (2020 - 2022)
+  Curated customized short-form reels and visual campaign sequences 
+  for premium design studios and tech agencies globally.
+
+========================================================================
+                  DOCUMENT COMPILED SECURELY [SHAYER]
+========================================================================`;
+
+            setTimeout(() => {
+                const blob = new Blob([resumeContent], { type: "text/plain;charset=utf-8" });
+                const url = URL.createObjectURL(blob);
+                const link = document.createElement("a");
+                link.href = url;
+                link.download = "SHAYER_CV_DOSSIER.txt";
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                URL.revokeObjectURL(url);
+                showToast("Dossier text download complete", "success");
+            }, 1200);
+        }
+
+        // Subtle Ambient Star Particle Background
+        const canvas = document.getElementById("constellation-canvas");
+        const ctx = canvas.getContext("2d");
+
+        let particles = [];
+        const maxParticles = 60;
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            initParticles();
+        }
+
+        class Star {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.vx = (Math.random() - 0.5) * 0.25;
+                this.vy = (Math.random() - 0.5) * 0.25;
+                this.radius = Math.random() * 1.2 + 0.5;
+            }
+
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                ctx.fillStyle = "rgba(255, 255, 255, 0.15)";
+                ctx.fill();
+            }
+
+            update() {
+                if (this.x < 0 || this.x > canvas.width) this.vx = -this.vx;
+                if (this.y < 0 || this.y > canvas.height) this.vy = -this.vy;
+                this.x += this.vx;
+                this.y += this.vy;
+                this.draw();
+            }
+        }
+
+        // INIT PARTICLES
+        function initParticles() {
+            particles = [];
+            for (let i = 0; i < maxParticles; i++) {
+                particles.push(new Star());
+            }
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(p => p.update());
+            requestAnimationFrame(animate);
+        }
+
+        // Telemetry system live clock
+        function startTelemetryClock() {
+            setInterval(() => {
+                const now = new Date();
+                const timeStr = now.toISOString().split('T')[1].slice(0, 8) + ' GMT';
+                document.getElementById("header-time").innerText = timeStr;
+            }, 1000);
+        }
+
+        // Non-blocking premium notifications
+        function showToast(message, type = "success") {
+            const wrapper = document.getElementById("toast-wrapper");
+            const toast = document.createElement("div");
+            
+            toast.className = "premium-card shadow-2xl rounded-2xl p-4 flex items-center space-x-3 pointer-events-auto transition-all duration-300 transform translate-x-12 opacity-0 border-l-2";
+            
+            if (type === "success") {
+                toast.style.borderLeftColor = "var(--accent-primary)";
+            } else if (type === "error") {
+                toast.style.borderLeftColor = "#f43f5e";
+            } else {
+                toast.style.borderLeftColor = "#60a5fa";
+            }
+
+            toast.innerHTML = `
+                <div class="flex items-center space-x-2">
+                    <span class="w-1.5 h-1.5 rounded-full animate-ping" style="background-color: ${type === 'success' ? 'var(--accent-primary)' : type === 'error' ? '#f43f5e' : '#60a5fa'}"></span>
+                    <span class="font-mono text-[10px] tracking-widest text-slate-200 uppercase">${message}</span>
+                </div>
+            `;
+
+            wrapper.appendChild(toast);
+
+            setTimeout(() => {
+                toast.classList.remove("translate-x-12", "opacity-0");
+            }, 10);
+
+            setTimeout(() => {
+                toast.classList.add("translate-x-12", "opacity-0");
+                setTimeout(() => {
+                    toast.remove();
+                }, 300);
+            }, 3000);
+        }
+
+        window.addEventListener("resize", resizeCanvas);
+
+        // Instantiation
+        window.onload = function() {
+            loadConfigurations();
+            renderLongVideos();
+            renderShortVideos();
+            resizeCanvas();
+            startTelemetryClock();
+            requestAnimationFrame(animate);
+            showToast("System ready", "success");
+        };
+    </script>
+</body>
+</html>

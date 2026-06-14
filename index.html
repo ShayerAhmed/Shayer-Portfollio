@@ -7,7 +7,7 @@
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700;800&family=JetBrains+Mono:wght@200;300;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600&family=Inter:wght@200;300;400;500;600;700;800&family=JetBrains+Mono:wght@200;300;400;500;700&display=swap" rel="stylesheet">
     
     <script>
         tailwind.config = {
@@ -24,7 +24,7 @@
 
     <style>
         :root {
-            --accent-primary: #CCFF00; /* Signature Neon Lime */
+            --accent-primary: #CCFF00;
             --accent-primary-rgb: 204, 255, 0;
             --bg-dark: #06080c;
             --bg-card: rgba(15, 20, 30, 0.4);
@@ -123,15 +123,9 @@
             100% { transform: translateY(-50%); }
         }
 
-        .scroll-col-1 {
-            animation: scrollUp 24s linear infinite;
-        }
-        .scroll-col-2 {
-            animation: scrollUp 18s linear infinite;
-        }
-        .scroll-col-3 {
-            animation: scrollUp 28s linear infinite;
-        }
+        .scroll-col-1 { animation: scrollUp 24s linear infinite; }
+        .scroll-col-2 { animation: scrollUp 18s linear infinite; }
+        .scroll-col-3 { animation: scrollUp 28s linear infinite; }
 
         .scroll-col-1, .scroll-col-2, .scroll-col-3 {
             will-change: transform;
@@ -171,24 +165,22 @@
             z-index: 30;
         }
 
-        /* Customized minimal scrollbar */
-        ::-webkit-scrollbar {
-            width: 5px;
-        }
-        ::-webkit-scrollbar-track {
-            background: transparent;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: rgba(255, 255, 255, 0.08);
-            border-radius: 99px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: var(--accent-primary);
+        /* Targeted Bolding for Rapid Skimming */
+        .testimonial-card p strong {
+            color: #ffffff;
+            font-weight: 600;
         }
 
-        .drawer-transition {
-            transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-        }
+        /* Customized minimal scrollbar */
+        ::-webkit-scrollbar { width: 5px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.08); border-radius: 99px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--accent-primary); }
+
+        .drawer-transition { transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1); }
+        
+        /* Utility for handwritten elements */
+        .font-caveat { font-family: 'Caveat', cursive; }
     </style>
 </head>
 <body class="text-[#f1f5f9] font-sans relative overflow-x-hidden min-h-screen select-none">
@@ -196,7 +188,7 @@
     <!-- Interactive Canvas Physics Simulation Backdrop -->
     <canvas id="constellation-canvas" class="fixed top-0 left-0 w-full h-full z-0 pointer-events-none opacity-45"></canvas>
 
-    <!-- Custom Rounded Triangle Play Cursor (Ensuring extreme overlay stacking priority) -->
+    <!-- Custom Rounded Triangle Play Cursor -->
     <div id="custom-cursor" class="fixed top-0 left-0 w-8 h-8 pointer-events-none z-[9999] transform -translate-x-1/2 -translate-y-1/2 transition-transform duration-75 ease-out opacity-0 lg:opacity-100 hidden lg:block">
         <svg class="w-full h-full text-[var(--accent-primary)] filter drop-shadow-[0_2px_8px_rgba(var(--accent-primary-rgb),0.6)]" viewBox="0 0 24 24" fill="currentColor">
             <path d="M8 5v14l11-7z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
@@ -207,112 +199,83 @@
     <div class="ambient-glow-1"></div>
     <div class="ambient-glow-2"></div>
 
+    <!-- STICKY HEADER WITH HIRE ME CTA -->
+    <header class="fixed top-0 left-0 w-full py-5 px-6 sm:px-12 border-b border-white/[0.05] flex justify-between items-center z-50 bg-[#06080c]/80 backdrop-blur-md">
+        <div class="flex items-center space-x-3 select-none">
+            <span id="logo-branding" class="font-mono text-base tracking-[0.3em] text-white font-extrabold">SHAYER</span>
+            <span class="w-1.5 h-1.5 rounded-full bg-[var(--accent-primary)]"></span>
+        </div>
+        
+        <div class="flex items-center">
+            <a href="#contact-section" class="bg-[var(--accent-primary)] text-black px-6 py-2.5 rounded-full font-mono text-[10px] sm:text-xs font-bold uppercase tracking-wider hover:bg-white hover:scale-105 transition-all shadow-[0_0_15px_rgba(var(--accent-primary-rgb),0.2)] cursor-none">
+                Hire Me
+            </a>
+        </div>
+    </header>
+
     <!-- MAIN PAGE CONTAINER -->
-    <div class="relative z-10 max-w-6xl mx-auto px-6 sm:px-12 flex flex-col justify-between min-h-screen">
+    <div class="relative z-10 max-w-6xl mx-auto px-6 sm:px-12 flex flex-col justify-between min-h-screen pt-32">
 
-        <!-- CLEAN MODERN HEADER -->
-        <header class="w-full py-10 border-b border-white/[0.05] flex justify-between items-center">
-            <div class="flex items-center space-x-3 select-none">
-                <span id="logo-branding" class="font-mono text-sm tracking-[0.3em] text-white font-extrabold">SHAYER</span>
-                <span class="w-1.5 h-1.5 rounded-full bg-[var(--accent-primary)]"></span>
-            </div>
-            
-            <div class="flex items-center space-x-8 font-mono text-[11px] text-slate-400">
-                <span class="text-xs tracking-wider border border-white/5 px-4 py-2 rounded-full text-slate-400 select-none">PORTFOLIO</span>
-            </div>
-        </header>
+        <main class="flex-grow py-8 space-y-32">
 
-        <!-- VERTICAL PORTFOLIO SECTIONS -->
-        <main class="flex-grow py-16 space-y-32">
-
-            <!-- HERO INTRO & PORTRAIT SECTION -->
-            <section class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
-                <!-- Text Area (Left) -->
-                <div class="lg:col-span-6 space-y-6">
-                    <h1 id="hero-title" class="text-3xl sm:text-5xl font-light tracking-tight text-white leading-tight">
-                        Hi, I am Shayer. <br class="hidden sm:inline">I have been editing videos and creating motion design for 4 years.
-                    </h1>
-                    
-                    <p id="hero-desc" class="text-slate-400 text-sm sm:text-base leading-relaxed max-w-xl font-light">
-                        Combining pacing, composition, and high-tempo edits to build unforgettable digital stories. Specialized in crafting bespoke frames for both social, short-form reels, and long-form cinematic layouts.
-                    </p>
-
-                    <!-- REFERENCE IMAGE DESIGN INTEGRATION ( Rosetta / Sadness Inspired Pop-Out Cards ) -->
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-10 max-w-md">
+            <!-- HERO INTRO & EDITORIAL PORTRAIT SECTION -->
+            <section class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
+                
+                <!-- Text Area & Intro Video (Left) -->
+                <div class="lg:col-span-7 space-y-8 flex flex-col relative z-20">
+                    <div class="space-y-6">
+                        <h1 class="text-4xl sm:text-6xl lg:text-7xl font-light tracking-tight text-white leading-[1.05]">
+                            Hi, I am Shayer.
+                        </h1>
                         
-                        <!-- CARD 1: DOWNLOAD DOSSIER (Sophisticated Dark Slate Style with Pop-out SVG) -->
-                        <div onclick="downloadResume()" class="relative group cursor-pointer pt-8">
-                            <!-- Pop-out Graphics Element -->
-                            <div class="absolute -top-3 left-6 w-16 h-16 transition-all duration-500 ease-out group-hover:-translate-y-2.5 group-hover:scale-110 pointer-events-none z-20">
-                                <svg class="w-full h-full filter drop-shadow-[0_8px_16px_rgba(255,255,255,0.15)]" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M50 15 L80 35 L80 70 L50 90 L20 70 L20 35 Z" fill="url(#grad-rosetta)" stroke="#ffffff" stroke-width="1.5"/>
-                                    <!-- Inner document glyph -->
-                                    <rect x="38" y="38" width="24" height="28" rx="3" fill="white" />
-                                    <line x1="44" y1="45" x2="56" y2="45" stroke="#1e293b" stroke-width="2"/>
-                                    <line x1="44" y1="52" x2="56" y2="52" stroke="#1e293b" stroke-width="2"/>
-                                    <line x1="44" y1="59" x2="50" y2="59" stroke="var(--accent-primary)" stroke-width="2"/>
-                                    <defs>
-                                        <linearGradient id="grad-rosetta" x1="20" y1="15" x2="80" y2="90" gradientUnits="userSpaceOnUse">
-                                            <stop stop-color="#475569"/>
-                                            <stop offset="1" stop-color="#0f172a"/>
-                                        </linearGradient>
-                                    </defs>
-                                </svg>
-                            </div>
-                            
-                            <!-- Main Solid Card Box -->
-                            <div class="bg-[#1e293b] rounded-3xl p-5 pt-8 shadow-[0_15px_30px_rgba(0,0,0,0.4)] border border-white/10 relative overflow-hidden transition-all duration-500 group-hover:shadow-[0_25px_45px_rgba(var(--accent-primary-rgb),0.15)] group-hover:border-[var(--accent-primary)]/40">
-                                <div class="absolute inset-0 bg-gradient-to-tr from-black/25 via-transparent to-white/10 pointer-events-none"></div>
-                                <div class="absolute -right-4 -bottom-4 w-16 h-16 rounded-full bg-white/5 border border-white/10 group-hover:scale-125 transition-transform duration-700"></div>
+                        <p class="text-slate-300 text-lg sm:text-xl leading-relaxed max-w-2xl font-light">
+                            A motion designer and video editor based in Dhaka, Bangladesh, with 4+ years of experience creating video content that helps B2B brands communicate clearly and look world-class doing it.
+                        </p>
+                    </div>
+
+                    <!-- Intro Video Player -->
+                    <div class="relative pt-2 w-full max-w-[400px]">
+                        
+                        <div class="w-full aspect-video premium-card p-2 rounded-[24px] cursor-none z-20 shadow-[0_20px_50px_rgba(0,0,0,0.5)] group relative" onclick="openLightbox(activeIntroVideo, false)">
+                            <div class="relative w-full h-full rounded-[14px] overflow-hidden bg-slate-900 border border-white/5 flex items-center justify-center">
+                                <img id="intro-video-preview" src="https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?auto=format&fit=crop&w=800&q=80" 
+                                     alt="Intro Preview" 
+                                     class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 opacity-60" />
                                 
-                                <h3 class="font-sans text-lg font-bold text-white tracking-wide mt-2">Download CV</h3>
-                                <p class="font-mono text-[9px] text-white/80 mt-0.5 tracking-wider">FORMAT // <span class="font-bold text-white">INTERACTIVE PDF</span></p>
+                                <div class="absolute inset-0 bg-black/30 group-hover:bg-black/50 transition-colors flex flex-col items-center justify-center space-y-2 z-10">
+                                    <div class="w-12 h-12 rounded-full bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center shadow-lg transform scale-100 group-hover:scale-110 transition-transform duration-300">
+                                        <svg class="w-5 h-5 text-[var(--accent-primary)] fill-current translate-x-0.5" viewBox="0 0 24 24">
+                                            <path d="M8 5v14l11-7z" />
+                                        </svg>
+                                    </div>
+                                    <span class="font-mono text-[9px] text-[var(--accent-primary)] tracking-[0.2em] uppercase font-bold drop-shadow-md">PLAY INTRO</span>
+                                </div>
                             </div>
                         </div>
 
-                        <!-- CARD 2: LINKEDIN ARCHIVE (Sadness Cobalt Blue Style with Pop-out SVG) -->
-                        <div onclick="window.open('https://www.linkedin.com/in/shayertheone/', '_blank')" class="relative group cursor-pointer pt-8">
-                            <!-- Pop-out Graphics Element -->
-                            <div class="absolute -top-3 left-6 w-16 h-16 transition-all duration-500 ease-out group-hover:-translate-y-2.5 group-hover:scale-110 pointer-events-none z-20">
-                                <svg class="w-full h-full filter drop-shadow-[0_8px_16px_rgba(30,81,164,0.4)]" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <circle cx="50" cy="50" r="32" fill="url(#grad-sadness)" stroke="#cce3ff" stroke-width="1.5"/>
-                                    <!-- Inner LinkedIn brand text -->
-                                    <rect x="36" y="36" width="28" height="28" rx="4" fill="white"/>
-                                    <text x="50" y="57" fill="#1e51a4" font-family="'Inter', sans-serif" font-weight="900" font-size="20" text-anchor="middle">in</text>
-                                    <defs>
-                                        <linearGradient id="grad-sadness" x1="18" y1="18" x2="82" y2="82" gradientUnits="userSpaceOnUse">
-                                            <stop stop-color="#3b82f6"/>
-                                            <stop offset="1" stop-color="#1d4ed8"/>
-                                        </linearGradient>
-                                    </defs>
-                                </svg>
-                            </div>
-                            
-                            <!-- Main Solid Card Box -->
-                            <div class="bg-[#1e51a4] rounded-3xl p-5 pt-8 shadow-[0_15px_30px_rgba(30,81,164,0.25)] border border-white/10 relative overflow-hidden transition-all duration-500 group-hover:shadow-[0_25px_45px_rgba(30,81,164,0.45)] group-hover:border-white/20">
-                                <div class="absolute inset-0 bg-gradient-to-tr from-black/25 via-transparent to-white/10 pointer-events-none"></div>
-                                <div class="absolute -right-4 -bottom-4 w-16 h-16 rounded-full bg-white/5 border border-white/10 group-hover:scale-125 transition-transform duration-700"></div>
-                                
-                                <h3 class="font-sans text-lg font-bold text-white tracking-wide mt-2">LinkedIn</h3>
-                                <p class="font-mono text-[9px] text-white/80 mt-0.5 tracking-wider">USER // <span class="font-bold text-white">@SHAYERTHEONE</span></p>
-                            </div>
+                        <!-- Handwritten "Know me better" Arrow -->
+                        <div class="absolute top-[35%] -right-[220px] hidden lg:flex flex-col items-center z-30 pointer-events-none drop-shadow-md">
+                            <span class="font-caveat text-4xl text-[var(--accent-primary)] whitespace-nowrap opacity-100 mb-1 ml-16 transform -rotate-6">know me better</span>
+                            <svg class="w-28 h-20 text-[var(--accent-primary)] opacity-90 transform -rotate-12" viewBox="0 0 120 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M110,70 C70,75 30,50 10,20" stroke="currentColor" stroke-width="3" stroke-dasharray="6 6" stroke-linecap="round"/>
+                                <path d="M25,15 L10,20 L15,35" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
                         </div>
-
                     </div>
                 </div>
 
-                <!-- Portrait Space & Overlapping Intro Video Area (Right Column) -->
-                <div class="lg:col-span-6 relative flex justify-center items-center py-12 px-4 sm:px-8">
-                    <!-- Main Portrait Card (Large, prominent) -->
-                    <div class="premium-card p-3 rounded-[32px] w-full max-w-[320px] aspect-[4/5] relative z-10 shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
-                        <div class="relative w-full h-full rounded-2xl overflow-hidden bg-slate-900 border border-white/5">
-                            <!-- Shayer Portrait -->
-                            <img id="profile-photo" src="DSC00144 (1).JPG" 
+                <!-- Right Side: Profile Portrait & Sleek Bottom CTAs -->
+                <div class="lg:col-span-5 relative flex flex-col justify-center items-center py-12 px-4 sm:px-8 mt-12 lg:mt-0 z-10">
+                    
+                    <!-- Main Portrait Card -->
+                    <div class="premium-card p-3 rounded-[32px] w-full max-w-[280px] sm:max-w-[320px] aspect-[4/5] relative z-10 shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
+                        <div class="relative w-full h-full rounded-[20px] overflow-hidden bg-slate-900 border border-white/5">
+                            <img id="profile-photo" src="shayer.jpg" 
                                  alt="Shayer" 
                                  class="w-full h-full object-cover"
                                  onerror="this.classList.add('hidden'); document.getElementById('portrait-placeholder-svg').classList.remove('hidden');" />
                             
-                            <!-- Elegant SVG Portrait Fallback -->
+                            <!-- Fallback -->
                             <div id="portrait-placeholder-svg" class="hidden w-full h-full bg-[#0a0d14] flex flex-col items-center justify-center space-y-4 p-8 text-center absolute inset-0">
                                 <svg class="w-16 h-16 text-[var(--accent-primary)]" fill="none" stroke="currentColor" stroke-width="1" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
@@ -325,108 +288,67 @@
                         </div>
                     </div>
 
-                    <!-- Overlapping Intro Video Card (Overlaps slightly on bottom-left, on top) -->
-                    <div class="absolute bottom-6 left-[2%] sm:left-[6%] md:left-[10%] w-[55%] sm:w-[50%] aspect-video premium-card p-2 rounded-2xl cursor-pointer z-20 shadow-[0_25px_60px_rgba(0,0,0,0.85)] border border-white/10 group" onclick="openLightbox(activeIntroVideo, false)">
-                        <div class="relative w-full h-full rounded-xl overflow-hidden bg-slate-900 border border-white/5 flex items-center justify-center">
-                            <!-- Premium Cinematic Thumbnail background -->
-                            <img id="intro-video-preview" src="https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?auto=format&fit=crop&w=800&q=80" 
-                                 alt="Video Preview" 
-                                 class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 opacity-50" />
-                            
-                            <!-- Translucent Glass Video Play Cover Overlay -->
-                            <div class="absolute inset-0 bg-black/40 group-hover:bg-black/50 transition-colors flex flex-col items-center justify-center space-y-1.5 z-10">
-                                <div class="w-10 h-10 rounded-full bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center shadow-lg transform scale-100 group-hover:scale-110 transition-transform duration-300">
-                                    <svg class="w-4 h-4 text-[var(--accent-primary)] fill-current translate-x-0.5" viewBox="0 0 24 24">
-                                        <path d="M8 5v14l11-7z" />
-                                    </svg>
-                                </div>
-                                <span class="font-mono text-[8px] text-[var(--accent-primary)] tracking-[0.15em] uppercase font-bold">WATCH INTRO</span>
-                            </div>
+                    <!-- Clean Twin CTA Buttons Under Portrait (Glossy 3D Pill Mechanics) -->
+                    <div class="flex flex-row gap-5 mt-6 w-full max-w-[280px] sm:max-w-[320px] z-20 relative">
+                        <!-- CV Button -->
+                        <div onclick="downloadResume()" class="flex-1 rounded-full bg-gradient-to-r from-teal-400 to-[var(--accent-primary)] p-3.5 flex items-center justify-center space-x-2 cursor-none group transition-all duration-300 shadow-[inset_0_4px_6px_rgba(255,255,255,0.7),inset_0_-4px_6px_rgba(0,0,0,0.15),0_10px_20px_rgba(var(--accent-primary-rgb),0.3)] hover:-translate-y-1 hover:shadow-[inset_0_4px_8px_rgba(255,255,255,0.8),inset_0_-4px_8px_rgba(0,0,0,0.15),0_15px_30px_rgba(var(--accent-primary-rgb),0.4)] active:translate-y-1 active:shadow-[inset_0_2px_4px_rgba(0,0,0,0.1),inset_0_-2px_4px_rgba(255,255,255,0.2),0_5px_10px_rgba(var(--accent-primary-rgb),0.2)] border border-white/40">
+                            <svg class="w-4 h-4 text-[#064e3b] group-hover:scale-110 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                            </svg>
+                            <span class="font-sans text-xs font-extrabold text-[#064e3b] tracking-wide">Resume</span>
                         </div>
-                    </div>
 
-                    <!-- "Know me better" Arrow & Text Indicator -->
-                    <div class="absolute bottom-[35%] left-[2%] sm:left-[6%] md:left-[10%] hidden sm:flex flex-col items-end z-30 pointer-events-none transform -translate-x-[75%]">
-                        <span class="font-sans text-xs text-[var(--accent-primary)] tracking-[0.1em] font-light whitespace-nowrap opacity-90 mb-0.5 lowercase italic">know me better</span>
-                        <!-- Custom loopy hand-drawn style arrow pointing right/down towards the intro video card -->
-                        <svg class="w-16 h-12 text-[var(--accent-primary)] opacity-80" viewBox="0 0 80 50" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M10,5 C25,2 32,22 22,22 C12,22 17,8 42,18 C55,23 65,32 70,38" stroke="currentColor" stroke-width="1.8" stroke-dasharray="3 3" stroke-linecap="round"/>
-                            <path d="M60,35 L70,38 L66,28" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
+                        <!-- LinkedIn Button -->
+                        <div onclick="window.open('https://www.linkedin.com/in/shayertheone/', '_blank')" class="flex-1 rounded-full bg-gradient-to-r from-cyan-400 to-blue-600 p-3.5 flex items-center justify-center space-x-2 cursor-none group transition-all duration-300 shadow-[inset_0_4px_6px_rgba(255,255,255,0.5),inset_0_-4px_6px_rgba(0,0,0,0.2),0_10px_20px_rgba(37,99,235,0.3)] hover:-translate-y-1 hover:shadow-[inset_0_4px_8px_rgba(255,255,255,0.6),inset_0_-4px_8px_rgba(0,0,0,0.2),0_15px_30px_rgba(37,99,235,0.4)] active:translate-y-1 active:shadow-[inset_0_2px_4px_rgba(0,0,0,0.2),inset_0_-2px_4px_rgba(255,255,255,0.1),0_5px_10px_rgba(37,99,235,0.2)] border border-white/30">
+                            <svg class="w-4 h-4 text-white group-hover:scale-110 transition-transform" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+                            </svg>
+                            <span class="font-sans text-xs font-extrabold text-white tracking-wide">LinkedIn</span>
+                        </div>
                     </div>
                 </div>
             </section>
 
-            <!-- SECTION: LONG VIDEOS (Widescreen 2x3 Multi-Grid - Displaying exactly 6 loop tracks) -->
+            <!-- SECTION: LONG VIDEOS (Widescreen 2x3 Multi-Grid) -->
             <section class="space-y-8" id="long-videos-section">
-                <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-white/5 pb-6">
-                    <div>
-                        <h2 id="section-long-title" class="text-2xl sm:text-3xl font-light text-[var(--accent-primary)] mt-1 drop-shadow-[0_0_20px_rgba(var(--accent-primary-rgb),0.15)]">Long Videos</h2>
-                    </div>
+                <div class="flex flex-col border-b border-white/5 pb-6">
+                    <h2 class="text-3xl sm:text-4xl font-light text-[var(--accent-primary)] mt-1 drop-shadow-[0_0_20px_rgba(var(--accent-primary-rgb),0.15)]">Long Videos</h2>
                 </div>
 
-                <!-- 2x3 Grid of horizontal videos (Widescreen layout cells) -->
-                <div class="premium-card p-4 sm:p-6 rounded-3xl relative overflow-hidden">
-                    <div id="long-videos-container" class="video-grid-hover-effect grid grid-cols-1 md:grid-cols-2 gap-6 w-full animate-fadeIn">
-                        <!-- Instantiated by JS dynamically with exact 6 widescreen modules -->
+                <div class="premium-card p-3 sm:p-5 rounded-[32px] relative overflow-hidden">
+                    <div id="long-videos-container" class="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5 w-full animate-fadeIn">
+                        <!-- Instantiated by JS dynamically -->
                     </div>
                 </div>
             </section>
 
             <!-- SECTION: REELS / SHORTS (Vertical Multi-Grid) -->
             <section class="space-y-8" id="shorts-section">
-                <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-white/5 pb-6">
-                    <div>
-                        <h2 id="section-shorts-title" class="text-2xl sm:text-3xl font-light text-[var(--accent-primary)] mt-1 drop-shadow-[0_0_20px_rgba(var(--accent-primary-rgb),0.15)]">Reels / Shorts</h2>
-                    </div>
+                <div class="flex flex-col border-b border-white/5 pb-6">
+                    <h2 class="text-3xl sm:text-4xl font-light text-[var(--accent-primary)] mt-1 drop-shadow-[0_0_20px_rgba(var(--accent-primary-rgb),0.15)]">Reels / Shorts</h2>
                 </div>
 
-                <!-- 4 Column Vertical Reels -->
-                <div class="premium-card p-4 sm:p-6 rounded-3xl">
-                    <div id="shorts-container" class="video-grid-hover-effect grid grid-cols-2 md:grid-cols-4 gap-4 w-full">
+                <div class="premium-card p-3 sm:p-5 rounded-[32px]">
+                    <div id="shorts-container" class="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 w-full">
                         <!-- Instantiated by JS dynamically -->
                     </div>
                 </div>
             </section>
 
-            <!-- SECTION: TESTIMONIALS (Vertical Loop Grid - Visible side overflows completely secure) -->
+            <!-- SECTION: TESTIMONIALS -->
             <section class="space-y-8" id="testimonials-section">
-                <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-white/5 pb-6">
-                    <div>
-                        <h2 id="section-testimonials-title" class="text-2xl sm:text-3xl font-light text-[var(--accent-primary)] mt-1 drop-shadow-[0_0_20px_rgba(var(--accent-primary-rgb),0.15)]">What Project Managers, CSMs, and Team Leads say about me</h2>
-                    </div>
+                <div class="flex flex-col border-b border-white/5 pb-6">
+                    <h2 class="text-3xl sm:text-4xl font-light text-[var(--accent-primary)] mt-1 drop-shadow-[0_0_20px_rgba(var(--accent-primary-rgb),0.15)] max-w-2xl leading-tight">What Project Managers, CSMs, and Team Leads say about me</h2>
                 </div>
 
-                <!-- Loop Container (Parent has overflow-hidden, columns use overflow-visible, comfortable margins) -->
                 <div class="testimonials-container relative overflow-hidden h-[480px] px-8 sm:px-12 py-6 rounded-3xl bg-[#090b10]/40">
-                    <!-- Top/Bottom Vignette Shadows -->
                     <div class="absolute top-0 inset-x-0 h-20 bg-gradient-to-b from-[#06080c] via-[#06080c]/50 to-transparent z-20 pointer-events-none"></div>
                     <div class="absolute bottom-0 inset-x-0 h-20 bg-gradient-to-t from-[#06080c] via-[#06080c]/50 to-transparent z-20 pointer-events-none"></div>
 
-                    <!-- Grid wrapper containing columns (Overflow visible so scaled cards don't cut off horizontally) -->
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 h-full relative z-10 overflow-visible">
-                        
-                        <!-- COLUMN 1 -->
-                        <div class="h-full overflow-visible flex flex-col">
-                            <div id="scroll-track-1" class="scroll-col-1 flex flex-col gap-4">
-                                <!-- Loaded dynamically by JS -->
-                            </div>
-                        </div>
-
-                        <!-- COLUMN 2 -->
-                        <div class="h-full overflow-visible hidden md:flex flex-col">
-                            <div id="scroll-track-2" class="scroll-col-2 flex flex-col gap-4">
-                                <!-- Loaded dynamically by JS -->
-                            </div>
-                        </div>
-
-                        <!-- COLUMN 3 -->
-                        <div class="h-full overflow-visible hidden lg:flex flex-col">
-                            <div id="scroll-track-3" class="scroll-col-3 flex flex-col gap-4">
-                                <!-- Loaded dynamically by JS -->
-                            </div>
-                        </div>
-
+                        <div class="h-full overflow-visible flex flex-col"><div id="scroll-track-1" class="scroll-col-1 flex flex-col gap-4"></div></div>
+                        <div class="h-full overflow-visible hidden md:flex flex-col"><div id="scroll-track-2" class="scroll-col-2 flex flex-col gap-4"></div></div>
+                        <div class="h-full overflow-visible hidden lg:flex flex-col"><div id="scroll-track-3" class="scroll-col-3 flex flex-col gap-4"></div></div>
                     </div>
                 </div>
             </section>
@@ -438,36 +360,36 @@
                         <div class="marquee-container whitespace-nowrap">
                             <!-- Block 1 -->
                             <div class="inline-flex items-center space-x-12">
-                                <span class="font-mono text-xl sm:text-2xl font-bold tracking-[0.3em] text-slate-600 hover:text-[var(--accent-primary)] transition-colors cursor-crosshair px-6">AETHER</span>
+                                <span class="font-mono text-xl sm:text-2xl font-bold tracking-[0.3em] text-slate-600 hover:text-[var(--accent-primary)] transition-colors cursor-none px-6">AETHER</span>
                                 <span class="w-1.5 h-1.5 rounded-full bg-slate-800"></span>
-                                <span class="font-mono text-xl sm:text-2xl font-bold tracking-[0.3em] text-slate-600 hover:text-[var(--accent-primary)] transition-colors cursor-crosshair px-6">MONOLITH</span>
+                                <span class="font-mono text-xl sm:text-2xl font-bold tracking-[0.3em] text-slate-600 hover:text-[var(--accent-primary)] transition-colors cursor-none px-6">MONOLITH</span>
                                 <span class="w-1.5 h-1.5 rounded-full bg-slate-800"></span>
-                                <span class="font-mono text-xl sm:text-2xl font-bold tracking-[0.3em] text-slate-600 hover:text-[var(--accent-primary)] transition-colors cursor-crosshair px-6">VIRTUE</span>
+                                <span class="font-mono text-xl sm:text-2xl font-bold tracking-[0.3em] text-slate-600 hover:text-[var(--accent-primary)] transition-colors cursor-none px-6">VIRTUE</span>
                                 <span class="w-1.5 h-1.5 rounded-full bg-slate-800"></span>
-                                <span class="font-mono text-xl sm:text-2xl font-bold tracking-[0.3em] text-slate-600 hover:text-[var(--accent-primary)] transition-colors cursor-crosshair px-6">KINETIC</span>
+                                <span class="font-mono text-xl sm:text-2xl font-bold tracking-[0.3em] text-slate-600 hover:text-[var(--accent-primary)] transition-colors cursor-none px-6">KINETIC</span>
                                 <span class="w-1.5 h-1.5 rounded-full bg-slate-800"></span>
-                                <span class="font-mono text-xl sm:text-2xl font-bold tracking-[0.3em] text-slate-600 hover:text-[var(--accent-primary)] transition-colors cursor-crosshair px-6">NEURAL_STUDIOS</span>
+                                <span class="font-mono text-xl sm:text-2xl font-bold tracking-[0.3em] text-slate-600 hover:text-[var(--accent-primary)] transition-colors cursor-none px-6">NEURAL_STUDIOS</span>
                                 <span class="w-1.5 h-1.5 rounded-full bg-slate-800"></span>
-                                <span class="font-mono text-xl sm:text-2xl font-bold tracking-[0.3em] text-slate-600 hover:text-[var(--accent-primary)] transition-colors cursor-crosshair px-6">EIGHT_CO</span>
+                                <span class="font-mono text-xl sm:text-2xl font-bold tracking-[0.3em] text-slate-600 hover:text-[var(--accent-primary)] transition-colors cursor-none px-6">EIGHT_CO</span>
                                 <span class="w-1.5 h-1.5 rounded-full bg-slate-800"></span>
-                                <span class="font-mono text-xl sm:text-2xl font-bold tracking-[0.3em] text-slate-600 hover:text-[var(--accent-primary)] transition-colors cursor-crosshair px-6">PHANTOM</span>
+                                <span class="font-mono text-xl sm:text-2xl font-bold tracking-[0.3em] text-slate-600 hover:text-[var(--accent-primary)] transition-colors cursor-none px-6">PHANTOM</span>
                                 <span class="w-1.5 h-1.5 rounded-full bg-slate-800"></span>
                             </div>
                             <!-- Block 2 -->
                             <div class="inline-flex items-center space-x-12">
-                                <span class="font-mono text-xl sm:text-2xl font-bold tracking-[0.3em] text-slate-600 hover:text-[var(--accent-primary)] transition-colors cursor-crosshair px-6">AETHER</span>
+                                <span class="font-mono text-xl sm:text-2xl font-bold tracking-[0.3em] text-slate-600 hover:text-[var(--accent-primary)] transition-colors cursor-none px-6">AETHER</span>
                                 <span class="w-1.5 h-1.5 rounded-full bg-slate-800"></span>
-                                <span class="font-mono text-xl sm:text-2xl font-bold tracking-[0.3em] text-slate-600 hover:text-[var(--accent-primary)] transition-colors cursor-crosshair px-6">MONOLITH</span>
+                                <span class="font-mono text-xl sm:text-2xl font-bold tracking-[0.3em] text-slate-600 hover:text-[var(--accent-primary)] transition-colors cursor-none px-6">MONOLITH</span>
                                 <span class="w-1.5 h-1.5 rounded-full bg-slate-800"></span>
-                                <span class="font-mono text-xl sm:text-2xl font-bold tracking-[0.3em] text-slate-600 hover:text-[var(--accent-primary)] transition-colors cursor-crosshair px-6">VIRTUE</span>
+                                <span class="font-mono text-xl sm:text-2xl font-bold tracking-[0.3em] text-slate-600 hover:text-[var(--accent-primary)] transition-colors cursor-none px-6">VIRTUE</span>
                                 <span class="w-1.5 h-1.5 rounded-full bg-slate-800"></span>
-                                <span class="font-mono text-xl sm:text-2xl font-bold tracking-[0.3em] text-slate-600 hover:text-[var(--accent-primary)] transition-colors cursor-crosshair px-6">KINETIC</span>
+                                <span class="font-mono text-xl sm:text-2xl font-bold tracking-[0.3em] text-slate-600 hover:text-[var(--accent-primary)] transition-colors cursor-none px-6">KINETIC</span>
                                 <span class="w-1.5 h-1.5 rounded-full bg-slate-800"></span>
-                                <span class="font-mono text-xl sm:text-2xl font-bold tracking-[0.3em] text-slate-600 hover:text-[var(--accent-primary)] transition-colors cursor-crosshair px-6">NEURAL_STUDIOS</span>
+                                <span class="font-mono text-xl sm:text-2xl font-bold tracking-[0.3em] text-slate-600 hover:text-[var(--accent-primary)] transition-colors cursor-none px-6">NEURAL_STUDIOS</span>
                                 <span class="w-1.5 h-1.5 rounded-full bg-slate-800"></span>
-                                <span class="font-mono text-xl sm:text-2xl font-bold tracking-[0.3em] text-slate-600 hover:text-[var(--accent-primary)] transition-colors cursor-crosshair px-6">EIGHT_CO</span>
+                                <span class="font-mono text-xl sm:text-2xl font-bold tracking-[0.3em] text-slate-600 hover:text-[var(--accent-primary)] transition-colors cursor-none px-6">EIGHT_CO</span>
                                 <span class="w-1.5 h-1.5 rounded-full bg-slate-800"></span>
-                                <span class="font-mono text-xl sm:text-2xl font-bold tracking-[0.3em] text-slate-600 hover:text-[var(--accent-primary)] transition-colors cursor-crosshair px-6">PHANTOM</span>
+                                <span class="font-mono text-xl sm:text-2xl font-bold tracking-[0.3em] text-slate-600 hover:text-[var(--accent-primary)] transition-colors cursor-none px-6">PHANTOM</span>
                                 <span class="w-1.5 h-1.5 rounded-full bg-slate-800"></span>
                             </div>
                         </div>
@@ -477,61 +399,49 @@
 
             <!-- SECTION: INLINE CONTACT / EMAIL -->
             <section class="space-y-8" id="contact-section">
-                <div class="flex flex-col border-b border-white/5 pb-6">
-                    <h2 id="section-contact-title" class="text-2xl sm:text-3xl font-light text-[var(--accent-primary)] mt-1 drop-shadow-[0_0_20px_rgba(var(--accent-primary-rgb),0.15)]">Get in Touch</h2>
+                <div class="flex flex-col border-b border-white/5 pb-6 pt-12">
+                    <h2 class="text-3xl sm:text-4xl font-light text-[var(--accent-primary)] mt-1 drop-shadow-[0_0_20px_rgba(var(--accent-primary-rgb),0.15)]">Get in Touch</h2>
                 </div>
 
                 <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
                     <!-- Left Copy / Details -->
                     <div class="lg:col-span-5 space-y-6">
-                        <p id="contact-desc" class="text-slate-400 text-sm leading-relaxed font-light">
+                        <p class="text-slate-400 text-sm sm:text-base leading-relaxed font-light">
                             If you're seeking customized video setups, interactive media integrations, or looking to discuss creative direction for an upcoming product launch:
                         </p>
                         
                         <div class="space-y-4">
-                            <a href="mailto:hello.shayer@gmail.com" class="group flex items-center space-x-4 p-4 rounded-2xl bg-white/[0.01] border border-white/5 hover:border-[#CCFF00]/40 transition-all font-mono text-xs select-none relative z-30 group cursor-none">
-                                <div class="w-10 h-10 rounded-full bg-white/[0.02] flex items-center justify-center text-slate-400 group-hover:text-[#CCFF00] transition-colors">
-                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+                            <a href="mailto:hello.shayer@gmail.com" class="group flex items-center space-x-4 p-4 rounded-2xl bg-white/[0.01] border border-white/5 hover:border-[var(--accent-primary)]/40 transition-all font-mono text-xs select-none relative z-30 cursor-none">
+                                <div class="w-12 h-12 rounded-full bg-white/[0.02] flex items-center justify-center text-slate-400 group-hover:text-[var(--accent-primary)] transition-colors">
+                                    <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
                                     </svg>
                                 </div>
                                 <div>
-                                    <span class="block font-mono text-sm text-slate-200">hello.shayer@gmail.com</span>
+                                    <span class="block font-sans font-bold text-sm text-slate-200">hello.shayer@gmail.com</span>
                                 </div>
                             </a>
-
-                            <div class="flex items-center space-x-4 p-4 rounded-2xl bg-white/[0.01] border border-white/5">
-                                <div class="w-10 h-10 rounded-full bg-white/[0.02] flex items-center justify-center text-slate-400">
-                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25s-7.5-4.108-7.5-11.25a7.5 7.5 0 1119.5 10.5z" />
-                                    </svg>
-                                </div>
-                                <div>
-                                    <span class="block font-mono text-sm text-slate-200">Dhaka, Bangladesh</span>
-                                </div>
-                            </div>
                         </div>
                     </div>
 
                     <!-- Right Quick Form -->
                     <div class="lg:col-span-7">
-                        <form id="contact-form" onsubmit="handleFormSubmit(event)" class="premium-card p-8 rounded-3xl space-y-4">
+                        <form id="contact-form" onsubmit="handleFormSubmit(event)" class="premium-card p-8 rounded-[32px] space-y-4">
                             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                 <div class="space-y-1.5">
                                     <label class="block font-mono text-[10px] text-slate-500 uppercase">Your Name</label>
-                                    <input type="text" id="form-name" required class="w-full bg-white/[0.02] text-white font-mono text-xs px-4 py-3 rounded-xl border border-white/10 focus:border-[#CCFF00] focus:outline-none transition-colors" placeholder="e.g. Satoshi">
+                                    <input type="text" id="form-name" required class="w-full bg-white/[0.02] text-white font-mono text-sm px-4 py-3.5 rounded-xl border border-white/10 focus:border-[var(--accent-primary)] focus:outline-none transition-colors cursor-none" placeholder="e.g. Satoshi">
                                 </div>
                                 <div class="space-y-1.5">
                                     <label class="block font-mono text-[10px] text-slate-500 uppercase">Your Email</label>
-                                    <input type="email" id="form-email" required class="w-full bg-white/[0.02] text-white font-mono text-xs px-4 py-3 rounded-xl border border-white/10 focus:border-[#CCFF00] focus:outline-none transition-colors" placeholder="e.g. user@domain.com">
+                                    <input type="email" id="form-email" required class="w-full bg-white/[0.02] text-white font-mono text-sm px-4 py-3.5 rounded-xl border border-white/10 focus:border-[var(--accent-primary)] focus:outline-none transition-colors cursor-none" placeholder="e.g. user@domain.com">
                                 </div>
                             </div>
                             <div class="space-y-1.5">
                                 <label class="block font-mono text-[10px] text-slate-500 uppercase">Message</label>
-                                <textarea id="form-message" rows="4" required class="w-full bg-white/[0.02] text-white font-mono text-xs p-4 rounded-xl border border-white/10 focus:border-[#CCFF00] focus:outline-none transition-colors resize-none" placeholder="Write details about your vision here..."></textarea>
+                                <textarea id="form-message" rows="4" required class="w-full bg-white/[0.02] text-white font-mono text-sm p-4 rounded-xl border border-white/10 focus:border-[var(--accent-primary)] focus:outline-none transition-colors resize-none cursor-none" placeholder="Write details about your vision here..."></textarea>
                             </div>
-                            <button type="submit" class="w-full py-4 rounded-xl bg-[#CCFF00] text-black font-mono text-xs font-bold uppercase tracking-wider hover:bg-white hover:text-black hover:shadow-[0_0_25px_rgba(204,255,0,0.3)] transition-all">
+                            <button type="submit" class="w-full py-5 sm:py-6 rounded-xl bg-[var(--accent-primary)] text-black font-mono text-sm font-bold uppercase tracking-wider hover:bg-white hover:text-black hover:shadow-[0_0_25px_rgba(204,255,0,0.3)] transition-all cursor-none">
                                 SEND MESSAGE INQUIRY
                             </button>
                         </form>
@@ -542,10 +452,9 @@
         </main>
 
         <!-- FOOTER -->
-        <footer class="w-full py-12 border-t border-white/5 flex flex-col sm:flex-row justify-between items-center text-[10px] font-mono text-slate-500 gap-4">
+        <footer class="w-full py-12 border-t border-white/5 flex flex-col sm:flex-row justify-between items-center text-[10px] font-mono text-slate-500 gap-4 mt-12">
             <span>© 2026 SHAYER // CREATIVE MOTION ARCHIVE</span>
             <div class="flex items-center space-x-6 relative">
-                <span>ALL WORK ENGLISH ACCESSIBLE</span>
                 <!-- Secret Admin trigger secretly anchored to a wider click-friendly badge in bottom-right of footer -->
                 <div id="admin-trigger-badge" onclick="handleAdminTrigger()" class="flex items-center space-x-2 bg-white/[0.02] border border-white/5 px-3 py-1.5 rounded-md hover:border-[var(--accent-primary)]/20 hover:bg-[var(--accent-primary)]/[0.02] transition-all select-none relative z-30 group cursor-none" title="System Status badge">
                     <span class="w-1.5 h-1.5 rounded-full bg-[var(--accent-primary)] group-hover:animate-ping"></span>
@@ -560,24 +469,20 @@
     <div class="fixed bottom-6 right-6 z-40 flex flex-col items-end space-y-3">
         <!-- Floating Options Panel -->
         <div id="fab-options" class="flex flex-col space-y-2 opacity-0 translate-y-4 pointer-events-none transition-all duration-300">
-            <!-- WhatsApp option -->
-            <a id="fab-whatsapp-button" href="https://wa.me/8801700000000" target="_blank" rel="noopener noreferrer" class="flex items-center space-x-2 bg-[#25D366] text-white px-5 py-3 rounded-full shadow-[0_4px_15px_rgba(37,211,102,0.3)] hover:scale-105 hover:bg-[#20ba5a] transition-all duration-300 text-[10px] font-mono font-bold tracking-wider uppercase">
-                <!-- WhatsApp SVG icon -->
+            <a id="fab-whatsapp-button" href="https://wa.me/8801700000000" target="_blank" rel="noopener noreferrer" class="flex items-center space-x-2 bg-[#25D366] text-white px-5 py-3 rounded-full shadow-[0_4px_15px_rgba(37,211,102,0.3)] hover:scale-105 hover:bg-[#20ba5a] transition-all duration-300 text-[10px] font-mono font-bold tracking-wider uppercase cursor-none">
                 <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L0 24l6.335-1.662c1.746.953 3.71 1.458 5.704 1.459h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
                 </svg>
                 <span>WhatsApp</span>
             </a>
-            <!-- Direct Email option -->
-            <a href="mailto:hello.shayer@gmail.com" class="flex items-center space-x-2 bg-white text-black px-5 py-3 rounded-full shadow-[0_4px_15px_rgba(255,255,255,0.15)] hover:scale-105 transition-all duration-300 text-[10px] font-mono font-bold tracking-wider uppercase">
+            <a href="mailto:hello.shayer@gmail.com" class="flex items-center space-x-2 bg-white text-black px-5 py-3 rounded-full shadow-[0_4px_15px_rgba(255,255,255,0.15)] hover:scale-105 transition-all duration-300 text-[10px] font-mono font-bold tracking-wider uppercase cursor-none">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
                 </svg>
                 <span>Direct Email</span>
             </a>
         </div>
-        <!-- Trigger Button -->
-        <button onclick="toggleFabMenu()" id="fab-trigger" class="flex items-center space-x-2 bg-[#CCFF00] text-black px-6 py-4 rounded-full shadow-[0_0_25px_rgba(204,255,0,0.45)] hover:shadow-[0_0_35px_rgba(204,255,0,0.7)] hover:scale-105 transition-all duration-300 z-50 group font-mono text-xs font-bold uppercase tracking-wider">
+        <button onclick="toggleFabMenu()" id="fab-trigger" class="flex items-center space-x-2 bg-[var(--accent-primary)] text-black px-6 py-4 rounded-full shadow-[0_0_25px_rgba(var(--accent-primary-rgb),0.45)] hover:shadow-[0_0_35px_rgba(var(--accent-primary-rgb),0.7)] hover:scale-105 transition-all duration-300 z-50 group font-mono text-xs font-bold uppercase tracking-wider cursor-none">
             <span id="fab-icon-container" class="transition-transform duration-300">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M8.625 12a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H8.25m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H12m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0h-.375M21 12c0 4.556-4.03 8.25-9 8.25a9.764 9.764 0 01-2.555-.337A5.972 5.972 0 015.41 20.97a5.969 5.969 0 01-.474-.065 4.48 4.48 0 00.978-2.025c.09-.457-.133-.901-.467-1.226C3.93 16.178 3 14.189 3 12c0-4.556 4.03-8.25 9-8.25s9 3.694 9 8.25z" />
@@ -587,8 +492,8 @@
         </button>
     </div>
 
-    <!-- SECRET ADMIN PIN CONFIRMATION MODAL (Cancel/Confirm buttons removed, closing on overlay tap integrated) -->
-    <div id="pin-modal" class="fixed inset-0 bg-black/85 backdrop-blur-md z-50 flex items-center justify-center p-4 hidden opacity-0 transition-opacity duration-300">
+    <!-- SECRET ADMIN PIN CONFIRMATION MODAL -->
+    <div id="pin-modal" class="fixed inset-0 bg-black/85 backdrop-blur-md z-50 flex items-center justify-center p-4 hidden opacity-0 transition-opacity duration-300 cursor-none">
         <div class="premium-card max-w-sm w-full p-8 rounded-3xl border border-white/10 text-center space-y-6 transform scale-95 transition-transform duration-300" id="pin-modal-content">
             <div class="w-12 h-12 bg-white/5 border border-[var(--accent-primary)]/30 rounded-full flex items-center justify-center mx-auto text-[var(--accent-primary)]">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
@@ -600,27 +505,25 @@
                 <p class="font-mono text-[10px] text-slate-500 mt-1">AUTHORIZATION REQUIRED</p>
             </div>
             <div class="relative">
-                <input type="password" id="admin-pin-field" oninput="checkPinLength(this)" class="w-full text-center bg-white/[0.03] text-[var(--accent-primary)] font-mono text-xl tracking-[0.4em] py-3 rounded-xl border border-white/10 focus:border-[var(--accent-primary)] focus:outline-none" placeholder="••••" maxlength="4">
+                <input type="password" id="admin-pin-field" oninput="checkPinLength(this)" class="w-full text-center bg-white/[0.03] text-[var(--accent-primary)] font-mono text-xl tracking-[0.4em] py-3 rounded-xl border border-white/10 focus:border-[var(--accent-primary)] focus:outline-none cursor-none" placeholder="••••" maxlength="4">
             </div>
         </div>
     </div>
 
-    <!-- CONFIGURATION DRAWER (MANAGE ACTIVE VIDEOS, TESTIMONIALS & COPY) -->
-    <div id="drawer-panel" class="fixed top-0 right-0 h-full w-full max-w-md bg-[#090b0e] border-l border-white/5 z-50 transform translate-x-full drawer-transition flex flex-col shadow-[0_0_80px_rgba(0,0,0,0.8)] text-slate-100">
-        <!-- Drawer Header -->
+    <!-- CONFIGURATION DRAWER (MANAGE ACTIVE VIDEOS & SETTINGS) -->
+    <div id="drawer-panel" class="fixed top-0 right-0 h-full w-full max-w-md bg-[#090b0e] border-l border-white/5 z-50 transform translate-x-full drawer-transition flex flex-col shadow-[0_0_80px_rgba(0,0,0,0.8)] text-slate-100 cursor-none">
         <div class="p-8 border-b border-white/5 flex justify-between items-center">
             <div>
                 <h3 class="font-mono text-sm font-bold text-white tracking-widest uppercase">PLAYBACK MANAGER</h3>
                 <p class="font-mono text-[10px] text-slate-400 mt-1">UPDATE CURRENT VIDEO SOURCE LINKS</p>
             </div>
-            <button onclick="toggleDrawer(false)" class="text-slate-400 hover:text-white transition-colors border border-white/10 p-2 rounded-full hover:border-white/25">
+            <button onclick="toggleDrawer(false)" class="text-slate-400 hover:text-white transition-colors border border-white/10 p-2 rounded-full hover:border-white/25 cursor-none">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path>
                 </svg>
             </button>
         </div>
 
-        <!-- Scrollable settings form -->
         <div class="flex-grow overflow-y-auto p-8 space-y-8">
             
             <!-- SECTION 1: IDENTITY & STYLING -->
@@ -628,96 +531,42 @@
                 <h4 class="font-mono text-xs text-[var(--accent-primary)] font-bold uppercase tracking-wider">IDENTITY & STYLING</h4>
                 <div class="space-y-3">
                     <div class="space-y-1">
-                        <label class="block font-mono text-[9px] text-slate-500 uppercase">Logo Brand Tag</label>
-                        <input type="text" id="input-brand-name" class="w-full bg-white/[0.02] text-white font-mono text-xs px-3 py-2.5 rounded-lg border border-white/10 focus:border-[var(--accent-primary)] focus:outline-none">
-                    </div>
-                    <div class="space-y-1">
                         <label class="block font-mono text-[9px] text-slate-500 uppercase">Profile Photo URL</label>
-                        <input type="text" id="input-profile-photo-url" class="w-full bg-white/[0.02] text-white font-mono text-xs px-3 py-2.5 rounded-lg border border-white/10 focus:border-[var(--accent-primary)] focus:outline-none" placeholder="e.g. shayer.jpg or raw.githubusercontent path">
+                        <input type="text" id="input-profile-photo-url" class="w-full bg-white/[0.02] text-white font-mono text-xs px-3 py-2.5 rounded-lg border border-white/10 focus:border-[var(--accent-primary)] focus:outline-none cursor-none" placeholder="e.g. shayer.jpg or raw.githubusercontent path">
                     </div>
                     <div class="space-y-1">
-                        <label class="block font-mono text-[9px] text-slate-500 uppercase">WhatsApp Connection Code (Include Country Code)</label>
-                        <input type="text" id="input-whatsapp-num" class="w-full bg-white/[0.02] text-white font-mono text-xs px-3 py-2.5 rounded-lg border border-white/10 focus:border-[var(--accent-primary)] focus:outline-none">
+                        <label class="block font-mono text-[9px] text-slate-500 uppercase">WhatsApp Connection Code</label>
+                        <input type="text" id="input-whatsapp-num" class="w-full bg-white/[0.02] text-white font-mono text-xs px-3 py-2.5 rounded-lg border border-white/10 focus:border-[var(--accent-primary)] focus:outline-none cursor-none">
                     </div>
                     <div class="space-y-1">
                         <label class="block font-mono text-[9px] text-slate-500 uppercase">Intro Video YouTube ID</label>
-                        <input type="text" id="input-intro-video-id" class="w-full bg-white/[0.02] text-white font-mono text-xs px-3 py-2.5 rounded-lg border border-white/10 focus:border-[var(--accent-primary)] focus:outline-none">
+                        <input type="text" id="input-intro-video-id" class="w-full bg-white/[0.02] text-white font-mono text-xs px-3 py-2.5 rounded-lg border border-white/10 focus:border-[var(--accent-primary)] focus:outline-none cursor-none" placeholder="e.g. y6120Q5iUAc">
+                    </div>
+                    <div class="space-y-1">
+                        <label class="block font-mono text-[9px] text-slate-500 uppercase">CV File URL / Relative Path</label>
+                        <input type="text" id="input-cv-url" class="w-full bg-white/[0.02] text-[#f1f5f9] font-mono text-xs px-3 py-2.5 rounded-lg border border-white/10 focus:border-[var(--accent-primary)] focus:outline-none cursor-none" placeholder="e.g. resume.pdf or raw.githubusercontent path">
                     </div>
                     <div class="space-y-1.5 pt-2">
                         <label class="block font-mono text-[9px] text-slate-500 uppercase">Primary Accent Theme Color</label>
                         <div class="flex items-center space-x-2">
                             <input type="color" id="input-theme-color-picker" class="w-10 h-10 rounded border border-white/10 bg-transparent cursor-none">
-                            <input type="text" id="input-theme-color-hex" class="flex-grow bg-white/[0.02] text-white font-mono text-xs px-3 py-2.5 rounded-lg border border-white/10 focus:border-[var(--accent-primary)] focus:outline-none" placeholder="#CCFF00" maxlength="7">
+                            <input type="text" id="input-theme-color-hex" class="flex-grow bg-white/[0.02] text-white font-mono text-xs px-3 py-2.5 rounded-lg border border-white/10 focus:border-[var(--accent-primary)] focus:outline-none cursor-none" placeholder="#CCFF00" maxlength="7">
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- SECTION 2: CV PDF CONFIGURATION -->
+            <!-- SECTION 2: PLAYLIST (LONG VIDEOS) -->
             <div class="space-y-4 border-b border-white/5 pb-6">
-                <h4 class="font-mono text-xs text-[var(--accent-primary)] font-bold uppercase tracking-wider">CV PDF CONFIGURATION</h4>
-                <div class="space-y-3">
-                    <div class="space-y-1">
-                        <label class="block font-mono text-[9px] text-slate-500 uppercase">CV File URL / Relative Path</label>
-                        <input type="text" id="input-cv-url" class="w-full bg-white/[0.02] text-[#f1f5f9] font-mono text-xs px-3 py-2.5 rounded-lg border border-white/10 focus:border-[var(--accent-primary)] focus:outline-none" placeholder="e.g. resume.pdf or raw.githubusercontent path">
-                    </div>
-                </div>
-            </div>
-
-            <!-- SECTION 3: TYPOGRAPHY & COPY -->
-            <div class="space-y-4 border-b border-white/5 pb-6">
-                <h4 class="font-mono text-xs text-[var(--accent-primary)] font-bold uppercase tracking-wider">TYPOGRAPHY & COPY</h4>
-                <div class="space-y-3">
-                    <div class="space-y-1">
-                        <label class="block font-mono text-[9px] text-slate-500 uppercase">Hero Main Heading</label>
-                        <textarea id="input-hero-title" rows="3" class="w-full bg-white/[0.02] text-white font-mono text-xs p-3 rounded-lg border border-white/10 focus:border-[var(--accent-primary)] focus:outline-none resize-none"></textarea>
-                    </div>
-                    <div class="space-y-1">
-                        <label class="block font-mono text-[9px] text-slate-500 uppercase">Hero Paragraph Bio</label>
-                        <textarea id="input-hero-desc" rows="4" class="w-full bg-white/[0.02] text-white font-mono text-xs p-3 rounded-lg border border-white/10 focus:border-[var(--accent-primary)] focus:outline-none resize-none"></textarea>
-                    </div>
-                    <div class="space-y-1">
-                        <label class="block font-mono text-[9px] text-slate-500 uppercase">Long Videos Title</label>
-                        <input type="text" id="input-long-title" class="w-full bg-white/[0.02] text-white font-mono text-xs px-3 py-2.5 rounded-lg border border-white/10 focus:border-[var(--accent-primary)] focus:outline-none">
-                    </div>
-                    <div class="space-y-1">
-                        <label class="block font-mono text-[9px] text-slate-500 uppercase">Short Videos Title</label>
-                        <input type="text" id="input-short-title" class="w-full bg-white/[0.02] text-white font-mono text-xs px-3 py-2.5 rounded-lg border border-white/10 focus:border-[var(--accent-primary)] focus:outline-none">
-                    </div>
-                    <div class="space-y-1">
-                        <label class="block font-mono text-[9px] text-slate-500 uppercase">Testimonials Section Title</label>
-                        <textarea id="input-testimonials-title" rows="2" class="w-full bg-white/[0.02] text-white font-mono text-xs p-3 rounded-lg border border-white/10 focus:border-[var(--accent-primary)] focus:outline-none resize-none"></textarea>
-                    </div>
-                    <div class="space-y-1">
-                        <label class="block font-mono text-[9px] text-slate-500 uppercase">Get In Touch Title</label>
-                        <input type="text" id="input-contact-title" class="w-full bg-white/[0.02] text-white font-mono text-xs px-3 py-2.5 rounded-lg border border-white/10 focus:border-[var(--accent-primary)] focus:outline-none">
-                    </div>
-                    <div class="space-y-1">
-                        <label class="block font-mono text-[9px] text-slate-500 uppercase">Get In Touch Description</label>
-                        <textarea id="input-contact-desc" rows="3" class="w-full bg-white/[0.02] text-white font-mono text-xs p-3 rounded-lg border border-white/10 focus:border-[var(--accent-primary)] focus:outline-none resize-none"></textarea>
-                    </div>
-                </div>
-            </div>
-
-            <!-- SECTION 4: TESTIMONIALS COPY CONFIGURATIONS -->
-            <div class="space-y-4 border-b border-white/5 pb-6">
-                <h4 class="font-mono text-xs text-[var(--accent-primary)] font-bold uppercase tracking-wider">TESTIMONIALS CARDS (6 SLOTS)</h4>
-                <div id="drawer-testimonials-inputs" class="space-y-4">
-                    <!-- Dynamic fields instantiated by JS -->
-                </div>
-            </div>
-
-            <!-- SECTION 5: PLAYLIST (LONG VIDEOS) -->
-            <div class="space-y-4 border-b border-white/5 pb-6">
-                <h4 class="font-mono text-xs text-[var(--accent-primary)] font-bold uppercase tracking-wider">LONG VIDEOS PLAYLIST (6 IDS - 2x3 GRID)</h4>
+                <h4 class="font-mono text-xs text-[var(--accent-primary)] font-bold uppercase tracking-wider">LONG VIDEOS PLAYLIST (6 SLOTS)</h4>
                 <div id="drawer-long-inputs" class="space-y-3">
                     <!-- Dynamic fields -->
                 </div>
             </div>
 
-            <!-- SECTION 6: PLAYLIST (REELS / SHORTS) -->
+            <!-- SECTION 3: PLAYLIST (REELS / SHORTS) -->
             <div class="space-y-4">
-                <h4 class="font-mono text-xs text-[var(--accent-primary)] font-bold uppercase tracking-wider">REELS / SHORTS (4 IDS)</h4>
+                <h4 class="font-mono text-xs text-[var(--accent-primary)] font-bold uppercase tracking-wider">REELS / SHORTS (4 SLOTS)</h4>
                 <div id="drawer-short-inputs" class="space-y-3">
                     <!-- Dynamic fields -->
                 </div>
@@ -725,21 +574,20 @@
 
         </div>
 
-        <!-- Actions -->
         <div class="p-8 border-t border-white/5 bg-[#07090d] grid grid-cols-2 gap-4">
-            <button onclick="resetGridToDefault()" class="py-3.5 px-2 rounded-full bg-transparent border border-white/10 hover:border-white/30 text-slate-300 font-mono text-xs transition-all">
-                RESET TO DEFAULTS
+            <button onclick="resetGridToDefault()" class="py-3.5 px-2 rounded-full bg-transparent border border-white/10 hover:border-white/30 text-slate-300 font-mono text-xs transition-all cursor-none">
+                RESET DEFAULTS
             </button>
-            <button onclick="saveGridConfig()" class="py-3.5 px-2 rounded-full bg-[var(--accent-primary)] text-black hover:bg-white font-mono text-xs font-bold transition-all">
+            <button onclick="saveGridConfig()" class="py-3.5 px-2 rounded-full bg-[var(--accent-primary)] text-black hover:bg-white font-mono text-xs font-bold transition-all cursor-none">
                 COMPILE LINKS
             </button>
         </div>
     </div>
 
     <!-- VIDEO LIGHTBOX OVERLAY MODAL -->
-    <div id="video-lightbox" class="fixed inset-0 bg-[#06080c]/95 z-50 flex items-center justify-center p-4 sm:p-8 hidden opacity-0 transition-opacity duration-300" onclick="closeLightbox()">
+    <div id="video-lightbox" class="fixed inset-0 bg-[#06080c]/95 z-50 flex items-center justify-center p-4 sm:p-8 hidden opacity-0 transition-opacity duration-300 cursor-none" onclick="closeLightbox()">
         <!-- Close Button -->
-        <button onclick="closeLightbox(); event.stopPropagation();" class="absolute top-6 right-6 text-slate-400 hover:text-white hover:scale-110 transition-transform p-3 rounded-full border border-white/10 bg-white/5 hover:border-[#CCFF00]/50 z-50">
+        <button onclick="closeLightbox(); event.stopPropagation();" class="absolute top-6 right-6 text-slate-400 hover:text-white hover:scale-110 transition-transform p-3 rounded-full border border-white/10 bg-white/5 hover:border-[var(--accent-primary)]/50 z-50 cursor-none">
             <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
             </svg>
@@ -751,87 +599,76 @@
     </div>
 
     <!-- NON-BLOCKING TOAST STACK -->
-    <div id="toast-wrapper" class="fixed top-24 right-6 sm:right-12 z-50 flex flex-col space-y-3 pointer-events-none"></div>
+    <div id="toast-wrapper" class="fixed top-28 right-6 sm:right-12 z-50 flex flex-col space-y-3 pointer-events-none"></div>
 
     <!-- MAIN CONTROL & RENDERING MODULE -->
     <script>
-        // Default Horizontal Loops (Configured exactly to 6 items to display a clean 2x3 grid)
+        // Default Horizontal Loops
         const DEFAULT_LONG_VIDS = [
-            "q76bMs-NwRk", // Cyberpunk alley
-            "H5nE_u5mKTo", // Cyber city aerial
-            "y6120Q5iUAc", // Retro sunset
-            "j_gN3Iq02Yg", // Neon spaceship corridor
-            "b794E7Zf788", // Futuristic telemetry interface
-            "S160_B15w_M"  // Vapor grid matrix
+            { id: "q76bMs-NwRk", title: "Cyberpunk Alley Concept" },
+            { id: "H5nE_u5mKTo", title: "Neon Aerial View" },
+            { id: "y6120Q5iUAc", title: "Synthwave Sunset Layout" },
+            { id: "j_gN3Iq02Yg", title: "Spaceship Corridor Loop" },
+            { id: "b794E7Zf788", title: "UI Telemetry Interface" },
+            { id: "S160_B15w_M", title: "Vaporwave System Matrix" }
         ];
 
         // Default Vertical Loops
         const DEFAULT_SHORT_VIDS = [
-            "q76bMs-NwRk", // Cyberpunk alley
-            "y6120Q5iUAc", // Retro sunset
-            "j_gN3Iq02Yg", // Neon space corridor
-            "u9C_f7V_8F8"  // Hyper space tunnel
+            { id: "q76bMs-NwRk", title: "Alley Reel" },
+            { id: "y6120Q5iUAc", title: "Sunset Reel" },
+            { id: "j_gN3Iq02Yg", title: "Corridor Cut" },
+            { id: "u9C_f7V_8F8", title: "Tunnel Concept" }
         ];
 
-        // Default Testimonials Dataset
-        const DEFAULT_TESTIMONIALS = [
+        // Default Testimonials Dataset (Targeted bolding implemented, Hardcoded for clean permanent hosting)
+        const TESTIMONIALS_DATA = [
             {
-                quote: "Shayer's speed is unmatched. He turned around a complex 3D commercial in 48 hours without compromising on the high-fidelity motion elements. Absolute professional.",
+                quote: "Shayer's <strong>speed is unmatched</strong>. He turned around a complex 3D commercial in 48 hours without compromising on the high-fidelity motion elements. Absolute professional.",
                 author: "Sarah Jenkins",
                 role: "Senior Project Manager // Aether",
                 avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=120&q=80"
             },
             {
-                quote: "Working with Shayer on our product rollout was seamless. He understands motion deeply and translates tricky feedback into polished assets.",
+                quote: "Working with Shayer on our product rollout was <strong>completely seamless</strong>. He understands motion deeply and translates tricky feedback into polished assets.",
                 author: "David Chen",
                 role: "Lead CSM // Monolith",
                 avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=120&q=80"
             },
             {
-                quote: "He doesn't just edit; he directs. Shayer took our raw footage and arranged a compelling, high-tempo visual masterpiece that boosted our retention.",
+                quote: "He doesn't just edit; <strong>he directs</strong>. Shayer took our raw footage and arranged a compelling, high-tempo visual masterpiece that boosted our retention.",
                 author: "Amara Okafor",
                 role: "Team Lead // Virtue",
                 avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=120&q=80"
             },
             {
-                quote: "Shayer is our go-to editor for high-stakes pitches. His motion design is sharp and has that premium modern aesthetic that our team appreciates.",
+                quote: "Shayer is our <strong>go-to editor</strong> for high-stakes pitches. His motion design is sharp and has that premium modern aesthetic that our team appreciates.",
                 author: "Liam Carter",
                 role: "Executive Producer // Kinetic",
                 avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=120&q=80"
             },
             {
-                quote: "Feedback loops skyrocketed once Shayer joined our production team. His communication is fast, clear, and turnaround times are remarkable.",
+                quote: "<strong>Feedback loops skyrocketed</strong> once Shayer joined our production team. His communication is fast, clear, and turnaround times are remarkable.",
                 author: "Elena Rostova",
                 role: "CSM Director // Phantom",
                 avatar: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=120&q=80"
             },
             {
-                quote: "Shayer brings a rare blend of technical animation awareness and pure storytelling instinct. The reels he cut for our team perform exceptionally well.",
+                quote: "Shayer brings a rare blend of <strong>technical animation awareness</strong> and pure storytelling instinct. The reels he cut for our team perform exceptionally well.",
                 author: "Marcus Vance",
                 role: "Product Lead // Eight Co",
                 avatar: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=120&q=80"
             }
         ];
 
-        // Default WhatsApp Configuration
+        // System defaults
         const DEFAULT_WHATSAPP = "8801700000000";
-        const DEFAULT_INTRO_VIDEO = "y6120Q5iUAc"; // Loop retro sunset as default intro
-        const DEFAULT_PROFILE_PHOTO = "shayer.jpg"; // Default fallback photo name
-        const DEFAULT_CV_URL = "resume.pdf"; // Default fallback relative PDF path
-
-        // Default Text Copy Content
-        const DEFAULT_BRAND_NAME = "SHAYER";
-        const DEFAULT_HERO_TITLE = "Hi, I am Shayer. I have been editing videos and creating motion design for 4 years.";
-        const DEFAULT_HERO_DESC = "Combining pacing, composition, and high-tempo edits to build unforgettable digital stories. Specialized in crafting bespoke frames for both social, short-form reels, and long-form cinematic layouts.";
-        const DEFAULT_LONG_TITLE = "Long Videos";
-        const DEFAULT_SHORT_TITLE = "Reels / Shorts";
-        const DEFAULT_TESTIMONIALS_TITLE = "What Project Managers, CSMs, and Team Leads say about me";
-        const DEFAULT_CONTACT_TITLE = "Get in Touch";
-        const DEFAULT_CONTACT_DESC = "If you're seeking customized video setups, interactive media integrations, or looking to discuss creative direction for an upcoming product launch:";
+        const DEFAULT_INTRO_VIDEO = "y6120Q5iUAc"; 
+        const DEFAULT_PROFILE_PHOTO = "shayer.jpg"; 
+        const DEFAULT_CV_URL = "resume.pdf"; 
 
         let activeLongVideos = [];
         let activeShortVideos = [];
-        let activeTestimonials = [];
         let activeWhatsAppNumber = DEFAULT_WHATSAPP;
         let activeIntroVideo = DEFAULT_INTRO_VIDEO;
         let activeProfilePhoto = DEFAULT_PROFILE_PHOTO;
@@ -844,7 +681,7 @@
         let cursorY = 0;
         let targetX = 0;
         let targetY = 0;
-        const cursorSpeed = 0.2; // Interpolation speed for smooth lagging trace
+        const cursorSpeed = 0.2; 
 
         window.addEventListener("mousemove", (e) => {
             targetX = e.clientX;
@@ -852,7 +689,6 @@
         });
 
         function updateCursorPosition() {
-            // Smooth easing
             cursorX += (targetX - cursorX) * cursorSpeed;
             cursorY += (targetY - cursorY) * cursorSpeed;
             if (customCursor) {
@@ -892,69 +728,48 @@
             const storedIntro = localStorage.getItem("kae_intro_video");
             const storedThemeHex = localStorage.getItem("kae_theme_color") || "#CCFF00";
             const storedPhoto = localStorage.getItem("kae_profile_photo") || DEFAULT_PROFILE_PHOTO;
-            const storedTestimonials = localStorage.getItem("kae_testimonials");
             const storedCvUrl = localStorage.getItem("kae_cv_url") || DEFAULT_CV_URL;
 
             if (storedLong) {
-                try { activeLongVideos = JSON.parse(storedLong); } catch(e) { activeLongVideos = [...DEFAULT_LONG_VIDS]; }
+                try { 
+                    const parsed = JSON.parse(storedLong); 
+                    activeLongVideos = parsed.map(v => typeof v === 'string' ? {id: v, title: "Project Name"} : v);
+                } catch(e) { activeLongVideos = [...DEFAULT_LONG_VIDS]; }
             } else {
                 activeLongVideos = [...DEFAULT_LONG_VIDS];
             }
 
             if (storedShort) {
-                try { activeShortVideos = JSON.parse(storedShort); } catch(e) { activeShortVideos = [...DEFAULT_SHORT_VIDS]; }
+                try { 
+                    const parsed = JSON.parse(storedShort);
+                    activeShortVideos = parsed.map(v => typeof v === 'string' ? {id: v, title: "Short Reel"} : v);
+                } catch(e) { activeShortVideos = [...DEFAULT_SHORT_VIDS]; }
             } else {
                 activeShortVideos = [...DEFAULT_SHORT_VIDS];
             }
 
-            if (storedWhatsApp) {
-                activeWhatsAppNumber = storedWhatsApp;
-            } else {
-                activeWhatsAppNumber = DEFAULT_WHATSAPP;
-            }
-
-            if (storedIntro) {
-                activeIntroVideo = storedIntro;
-            } else {
-                activeIntroVideo = DEFAULT_INTRO_VIDEO;
-            }
-
-            if (storedTestimonials) {
-                try { activeTestimonials = JSON.parse(storedTestimonials); } catch(e) { activeTestimonials = [...DEFAULT_TESTIMONIALS]; }
-            } else {
-                activeTestimonials = [...DEFAULT_TESTIMONIALS];
-            }
+            if (storedWhatsApp) { activeWhatsAppNumber = storedWhatsApp; } else { activeWhatsAppNumber = DEFAULT_WHATSAPP; }
+            if (storedIntro) { activeIntroVideo = storedIntro; } else { activeIntroVideo = DEFAULT_INTRO_VIDEO; }
 
             activeProfilePhoto = storedPhoto;
             activeCvUrl = storedCvUrl;
 
             // Apply profile image source
             const profileImg = document.getElementById("profile-photo");
-            if (profileImg) {
-                profileImg.src = activeProfilePhoto;
-            }
+            if (profileImg) { profileImg.src = activeProfilePhoto; }
 
-            // Apply custom theme hex color dynamically on startup
+            // Apply custom theme hex color dynamically
             applyThemeColor(storedThemeHex);
-
-            // Load and apply Text variables
-            document.getElementById("logo-branding").innerText = localStorage.getItem("kae_text_brand") || DEFAULT_BRAND_NAME;
-            document.getElementById("hero-title").innerText = localStorage.getItem("kae_text_hero_title") || DEFAULT_HERO_TITLE;
-            document.getElementById("hero-desc").innerText = localStorage.getItem("kae_text_hero_desc") || DEFAULT_HERO_DESC;
-            document.getElementById("section-long-title").innerText = localStorage.getItem("kae_text_long_title") || DEFAULT_LONG_TITLE;
-            document.getElementById("section-shorts-title").innerText = localStorage.getItem("kae_text_short_title") || DEFAULT_SHORT_TITLE;
-            document.getElementById("section-testimonials-title").innerText = localStorage.getItem("kae_text_test_title") || DEFAULT_TESTIMONIALS_TITLE;
-            document.getElementById("section-contact-title").innerText = localStorage.getItem("kae_text_contact_title") || DEFAULT_CONTACT_TITLE;
-            document.getElementById("contact-desc").innerText = localStorage.getItem("kae_text_contact_desc") || DEFAULT_CONTACT_DESC;
-
             updateWhatsAppButtonLink();
         }
 
         // Apply loaded/configured WhatsApp deep link to floating badge
         function updateWhatsAppButtonLink() {
             const btn = document.getElementById("fab-whatsapp-button");
-            const textMsg = encodeURIComponent("Hi Shayer, I saw your video production portfolio and I would love to connect about a project!");
-            btn.href = `https://wa.me/${activeWhatsAppNumber}?text=${textMsg}`;
+            if(btn){
+                const textMsg = encodeURIComponent("Hi Shayer, I saw your video production portfolio and I would love to connect about a project!");
+                btn.href = `https://wa.me/${activeWhatsAppNumber}?text=${textMsg}`;
+            }
         }
 
         // Stealth Admin Handler: Clicking status badge 5 times prompts security PIN modal
@@ -963,7 +778,6 @@
             if (logoClickCount === 1) {
                 setTimeout(() => { logoClickCount = 0; }, 3000);
             }
-            
             if (logoClickCount >= 5) {
                 logoClickCount = 0;
                 openPinModal();
@@ -1044,14 +858,12 @@
             const lightbox = document.getElementById("video-lightbox");
             const content = document.getElementById("lightbox-content");
             
-            // Set autoplay with standard controls and full sound enabled
             const finalUrl = `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=0&controls=1&modestbranding=1&rel=0`;
 
-            // Adjust aspect ratios dynamically based on orientation
             if (isVertical) {
-                content.className = "w-full max-w-[340px] sm:max-w-[380px] aspect-[9/16] transition-transform duration-300 transform scale-95 mx-auto bg-black rounded-3xl overflow-hidden border border-white/10 shadow-2xl relative";
+                content.className = "w-full max-w-[340px] sm:max-w-[380px] aspect-[9/16] transition-transform duration-300 transform scale-95 mx-auto bg-black rounded-3xl overflow-hidden border border-white/10 shadow-2xl relative cursor-none";
             } else {
-                content.className = "w-full max-w-5xl aspect-video transition-transform duration-300 transform scale-95 mx-auto bg-black rounded-3xl overflow-hidden border border-white/10";
+                content.className = "w-full max-w-5xl aspect-video transition-transform duration-300 transform scale-95 mx-auto bg-black rounded-3xl overflow-hidden border border-white/10 cursor-none";
             }
 
             content.innerHTML = `
@@ -1059,7 +871,6 @@
             `;
 
             lightbox.classList.remove("hidden");
-            // Micro animation delay
             setTimeout(() => {
                 lightbox.classList.remove("opacity-0");
                 content.classList.remove("scale-95");
@@ -1079,7 +890,7 @@
 
             setTimeout(() => {
                 lightbox.classList.add("hidden");
-                content.innerHTML = ""; // Tear down player iframe
+                content.innerHTML = "";
             }, 300);
         }
 
@@ -1089,11 +900,14 @@
             if (!container) return;
             container.innerHTML = "";
 
-            activeLongVideos.forEach((vidId, index) => {
+            activeLongVideos.forEach((vid, index) => {
+                const wrapper = document.createElement("div");
+                wrapper.className = "flex flex-col space-y-3";
+
                 const cell = document.createElement("div");
-                cell.className = "grid-item-target relative overflow-hidden bg-[#0d1017] border border-white/10 rounded-3xl aspect-video cursor-none";
+                cell.className = "grid-item-target relative overflow-hidden bg-[#0d1017] border border-white/10 rounded-[20px] aspect-video cursor-none";
                 
-                const embedUrl = `https://www.youtube.com/embed/${vidId}?autoplay=1&mute=1&loop=1&playlist=${vidId}&controls=0&playsinline=1&modestbranding=1&showinfo=0&rel=0&iv_load_policy=3&enablejsapi=1`;
+                const embedUrl = `https://www.youtube.com/embed/${vid.id}?autoplay=1&mute=1&loop=1&playlist=${vid.id}&controls=0&playsinline=1&modestbranding=1&showinfo=0&rel=0&iv_load_policy=3&enablejsapi=1`;
 
                 cell.innerHTML = `
                     <iframe 
@@ -1104,10 +918,16 @@
                         allow="autoplay; encrypted-media" 
                         allowfullscreen>
                     </iframe>
-                    <!-- Capture Click Overlay to activate high stage modal -->
-                    <div onclick="openLightbox('${vidId}', false)" class="absolute inset-0 z-10 hover:bg-black/10 transition-colors"></div>
+                    <div onclick="openLightbox('${vid.id}', false)" class="absolute inset-0 z-10 hover:bg-black/10 transition-colors"></div>
                 `;
-                container.appendChild(cell);
+
+                const meta = document.createElement("div");
+                meta.className = "px-2";
+                meta.innerHTML = `<h3 class="font-sans text-sm font-semibold text-white tracking-wide truncate opacity-90">${vid.title}</h3>`;
+
+                wrapper.appendChild(cell);
+                wrapper.appendChild(meta);
+                container.appendChild(wrapper);
             });
         }
 
@@ -1117,11 +937,14 @@
             if (!container) return;
             container.innerHTML = "";
 
-            activeShortVideos.forEach((vidId, index) => {
-                const cell = document.createElement("div");
-                cell.className = "grid-item-target relative overflow-hidden bg-[#0d1017] border border-white/10 rounded-2xl aspect-[9/16] cursor-none";
+            activeShortVideos.forEach((vid, index) => {
+                const wrapper = document.createElement("div");
+                wrapper.className = "flex flex-col space-y-3";
 
-                const embedUrl = `https://www.youtube.com/embed/${vidId}?autoplay=1&mute=1&loop=1&playlist=${vidId}&controls=0&playsinline=1&modestbranding=1&showinfo=0&rel=0&iv_load_policy=3&enablejsapi=1`;
+                const cell = document.createElement("div");
+                cell.className = "grid-item-target relative overflow-hidden bg-[#0d1017] border border-white/10 rounded-[20px] aspect-[9/16] cursor-none";
+
+                const embedUrl = `https://www.youtube.com/embed/${vid.id}?autoplay=1&mute=1&loop=1&playlist=${vid.id}&controls=0&playsinline=1&modestbranding=1&showinfo=0&rel=0&iv_load_policy=3&enablejsapi=1`;
 
                 cell.innerHTML = `
                     <iframe 
@@ -1132,14 +955,20 @@
                         allow="autoplay; encrypted-media" 
                         allowfullscreen>
                     </iframe>
-                    <!-- Capture Click Overlay to activate high stage modal -->
-                    <div onclick="openLightbox('${vidId}', true)" class="absolute inset-0 z-10 hover:bg-black/10 transition-colors"></div>
+                    <div onclick="openLightbox('${vid.id}', true)" class="absolute inset-0 z-10 hover:bg-black/10 transition-colors"></div>
                 `;
-                container.appendChild(cell);
+
+                const meta = document.createElement("div");
+                meta.className = "px-2 text-center";
+                meta.innerHTML = `<h3 class="font-sans text-xs font-semibold text-white tracking-wide truncate opacity-90">${vid.title}</h3>`;
+
+                wrapper.appendChild(cell);
+                wrapper.appendChild(meta);
+                container.appendChild(wrapper);
             });
         }
 
-        // Render Testimonials Dynamically to prevent visual loop cuts
+        // Render Testimonials Dynamically
         function renderTestimonials() {
             const track1 = document.getElementById("scroll-track-1");
             const track2 = document.getElementById("scroll-track-2");
@@ -1147,10 +976,10 @@
 
             if (!track1 || !track2 || !track3) return;
 
-            // Generate identical duplicates for glitch-free loop stability
-            const col1Data = [activeTestimonials[0], activeTestimonials[1], activeTestimonials[0], activeTestimonials[1]];
-            const col2Data = [activeTestimonials[2], activeTestimonials[3], activeTestimonials[2], activeTestimonials[3]];
-            const col3Data = [activeTestimonials[4], activeTestimonials[5], activeTestimonials[4], activeTestimonials[5]];
+            // Generate identical duplicates for glitch-free loop stability using hardcoded dataset
+            const col1Data = [TESTIMONIALS_DATA[0], TESTIMONIALS_DATA[1], TESTIMONIALS_DATA[0], TESTIMONIALS_DATA[1]];
+            const col2Data = [TESTIMONIALS_DATA[2], TESTIMONIALS_DATA[3], TESTIMONIALS_DATA[2], TESTIMONIALS_DATA[3]];
+            const col3Data = [TESTIMONIALS_DATA[4], TESTIMONIALS_DATA[5], TESTIMONIALS_DATA[4], TESTIMONIALS_DATA[5]];
 
             const renderTrack = (trackElement, dataset) => {
                 trackElement.innerHTML = dataset.map((item, index) => {
@@ -1163,7 +992,7 @@
                                 </div>
                             </div>
                             <p class="text-slate-300 text-xs font-light italic leading-relaxed relative z-10 line-clamp-4">
-                                "${item.quote}"
+                                ${item.quote}
                             </p>
                             <div class="flex items-center space-x-3 relative z-10">
                                 <img src="${item.avatar}" alt="${item.author}" class="w-8 h-8 rounded-full border border-white/10 object-cover" onerror="this.src='https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=120&q=80'" />
@@ -1182,84 +1011,53 @@
             renderTrack(track3, col3Data);
         }
 
-        // Build Testimonial settings editors inside Playback Manager drawer
-        function buildTestimonialInputs() {
-            const container = document.getElementById("drawer-testimonials-inputs");
-            if (!container) return;
-            container.innerHTML = "";
-
-            activeTestimonials.forEach((item, index) => {
-                const itemDiv = document.createElement("div");
-                itemDiv.className = "p-3 rounded-xl bg-white/[0.02] border border-white/5 space-y-2.5";
-                itemDiv.innerHTML = `
-                    <div class="font-mono text-[10px] text-slate-400 font-bold uppercase">TESTIMONIAL ${index + 1}</div>
-                    <div class="space-y-1">
-                        <label class="block font-mono text-[8px] text-slate-500 uppercase">Author Name</label>
-                        <input type="text" id="input-test-author-${index}" value="${item.author}" class="w-full bg-[#0d121d] text-white font-mono text-xs px-2.5 py-1.5 rounded border border-white/10 focus:border-[var(--accent-primary)] focus:outline-none">
-                    </div>
-                    <div class="space-y-1">
-                        <label class="block font-mono text-[8px] text-slate-500 uppercase">Author Title / Role</label>
-                        <input type="text" id="input-test-role-${index}" value="${item.role}" class="w-full bg-[#0d121d] text-white font-mono text-xs px-2.5 py-1.5 rounded border border-white/10 focus:border-[var(--accent-primary)] focus:outline-none">
-                    </div>
-                    <div class="space-y-1">
-                        <label class="block font-mono text-[8px] text-slate-500 uppercase">Author Image URL</label>
-                        <input type="text" id="input-test-avatar-${index}" value="${item.avatar}" class="w-full bg-[#0d121d] text-white font-mono text-xs px-2.5 py-1.5 rounded border border-white/10 focus:border-[var(--accent-primary)] focus:outline-none">
-                    </div>
-                    <div class="space-y-1">
-                        <label class="block font-mono text-[8px] text-slate-500 uppercase">Quote Text</label>
-                        <textarea id="input-test-quote-${index}" rows="2" class="w-full bg-[#0d121d] text-white font-mono text-xs p-2 rounded border border-white/10 focus:border-[var(--accent-primary)] focus:outline-none resize-none">${item.quote}</textarea>
-                    </div>
-                `;
-                container.appendChild(itemDiv);
-            });
-        }
-
-        // Configure Input Forms inside Drawer (Binding hex codes dynamically)
+        // Configure Input Forms inside Drawer
         function buildDrawerInputs() {
-            // Update WhatsApp input box, Intro Video, and CV PDF URL
+            // Update inputs
             document.getElementById("input-whatsapp-num").value = activeWhatsAppNumber;
             document.getElementById("input-intro-video-id").value = activeIntroVideo;
             document.getElementById("input-profile-photo-url").value = activeProfilePhoto;
             document.getElementById("input-cv-url").value = activeCvUrl;
-
-            // Load values for Content Managers
-            document.getElementById("input-brand-name").value = localStorage.getItem("kae_text_brand") || DEFAULT_BRAND_NAME;
-            document.getElementById("input-hero-title").value = localStorage.getItem("kae_text_hero_title") || DEFAULT_HERO_TITLE;
-            document.getElementById("input-hero-desc").value = localStorage.getItem("kae_text_hero_desc") || DEFAULT_HERO_DESC;
-            document.getElementById("input-long-title").value = localStorage.getItem("kae_text_long_title") || DEFAULT_LONG_TITLE;
-            document.getElementById("input-short-title").value = localStorage.getItem("kae_text_short_title") || DEFAULT_SHORT_TITLE;
-            document.getElementById("input-testimonials-title").value = localStorage.getItem("kae_text_test_title") || DEFAULT_TESTIMONIALS_TITLE;
-            document.getElementById("input-contact-title").value = localStorage.getItem("kae_text_contact_title") || DEFAULT_CONTACT_TITLE;
-            document.getElementById("input-contact-desc").value = localStorage.getItem("kae_text_contact_desc") || DEFAULT_CONTACT_DESC;
 
             // Load Hex color inputs
             const activeThemeColor = localStorage.getItem("kae_theme_color") || "#CCFF00";
             document.getElementById("input-theme-color-hex").value = activeThemeColor;
             document.getElementById("input-theme-color-picker").value = activeThemeColor;
 
-            // Build dynamic editable fields
-            buildTestimonialInputs();
-
+            // Populate Long Videos Array
             const longContainer = document.getElementById("drawer-long-inputs");
             longContainer.innerHTML = "";
-            activeLongVideos.forEach((vidId, index) => {
+            activeLongVideos.forEach((vid, index) => {
                 const item = document.createElement("div");
-                item.className = "flex items-center justify-between gap-3";
+                item.className = "p-2 rounded bg-white/[0.02] border border-white/5 space-y-2";
                 item.innerHTML = `
-                    <span class="font-mono text-[10px] text-slate-500 w-12">L_0${index + 1}</span>
-                    <input type="text" id="input-long-${index}" value="${vidId}" class="flex-grow bg-[#0d121d] text-white font-mono text-xs px-3 py-2 rounded-lg border border-white/10 focus:border-[var(--accent-primary)] focus:outline-none" maxlength="11">
+                    <div class="flex items-center justify-between gap-2">
+                        <span class="font-mono text-[9px] text-slate-500 w-8">ID:</span>
+                        <input type="text" id="input-long-id-${index}" value="${vid.id}" class="flex-grow bg-[#0d121d] text-white font-mono text-xs px-2 py-1.5 rounded border border-white/10 focus:border-[var(--accent-primary)] focus:outline-none cursor-none" maxlength="11">
+                    </div>
+                    <div class="flex items-center justify-between gap-2">
+                        <span class="font-mono text-[9px] text-slate-500 w-8">Title:</span>
+                        <input type="text" id="input-long-title-val-${index}" value="${vid.title}" class="flex-grow bg-[#0d121d] text-white font-mono text-xs px-2 py-1.5 rounded border border-white/10 focus:border-[var(--accent-primary)] focus:outline-none cursor-none">
+                    </div>
                 `;
                 longContainer.appendChild(item);
             });
 
+            // Populate Shorts Array
             const shortContainer = document.getElementById("drawer-short-inputs");
             shortContainer.innerHTML = "";
-            activeShortVideos.forEach((vidId, index) => {
+            activeShortVideos.forEach((vid, index) => {
                 const item = document.createElement("div");
-                item.className = "flex items-center justify-between gap-3";
+                item.className = "p-2 rounded bg-white/[0.02] border border-white/5 space-y-2";
                 item.innerHTML = `
-                    <span class="font-mono text-[10px] text-slate-500 w-12">S_0${index + 1}</span>
-                    <input type="text" id="input-short-${index}" value="${vidId}" class="flex-grow bg-[#0d121d] text-white font-mono text-xs px-3 py-2 rounded-lg border border-white/10 focus:border-[var(--accent-primary)] focus:outline-none" maxlength="11">
+                    <div class="flex items-center justify-between gap-2">
+                        <span class="font-mono text-[9px] text-slate-500 w-8">ID:</span>
+                        <input type="text" id="input-short-id-${index}" value="${vid.id}" class="flex-grow bg-[#0d121d] text-white font-mono text-xs px-2 py-1.5 rounded border border-white/10 focus:border-[var(--accent-primary)] focus:outline-none cursor-none" maxlength="11">
+                    </div>
+                    <div class="flex items-center justify-between gap-2">
+                        <span class="font-mono text-[9px] text-slate-500 w-8">Title:</span>
+                        <input type="text" id="input-short-title-val-${index}" value="${vid.title}" class="flex-grow bg-[#0d121d] text-white font-mono text-xs px-2 py-1.5 rounded border border-white/10 focus:border-[var(--accent-primary)] focus:outline-none cursor-none">
+                    </div>
                 `;
                 shortContainer.appendChild(item);
             });
@@ -1328,9 +1126,10 @@
 
             const newLongs = [];
             for (let i = 0; i < activeLongVideos.length; i++) {
-                const val = document.getElementById(`input-long-${i}`).value.trim();
-                if (val.length === 11) {
-                    newLongs.push(val);
+                const valId = document.getElementById(`input-long-id-${i}`).value.trim();
+                const valTitle = document.getElementById(`input-long-title-val-${i}`).value.trim();
+                if (valId.length === 11) {
+                    newLongs.push({ id: valId, title: valTitle || "Project Name" });
                 } else {
                     showToast("Error: Long Video index must be an 11-digit ID", "error");
                     return;
@@ -1339,42 +1138,21 @@
 
             const newShorts = [];
             for (let i = 0; i < activeShortVideos.length; i++) {
-                const val = document.getElementById("input-short-" + i).value.trim();
-                if (val.length === 11) {
-                    newShorts.push(val);
+                const valId = document.getElementById(`input-short-id-${i}`).value.trim();
+                const valTitle = document.getElementById(`input-short-title-val-${i}`).value.trim();
+                if (valId.length === 11) {
+                    newShorts.push({ id: valId, title: valTitle || "Short Reel" });
                 } else {
                     showToast("Error: Short Video index must be an 11-digit ID", "error");
                     return;
                 }
             }
 
-            // Save testimonials
-            const newTestimonials = [];
-            for (let i = 0; i < 6; i++) {
-                newTestimonials.push({
-                    author: document.getElementById(`input-test-author-${i}`).value.trim(),
-                    role: document.getElementById(`input-test-role-${i}`).value.trim(),
-                    avatar: document.getElementById(`input-test-avatar-${i}`).value.trim(),
-                    quote: document.getElementById(`input-test-quote-${i}`).value.trim()
-                });
-            }
-
-            // Save text variables
-            localStorage.setItem("kae_text_brand", document.getElementById("input-brand-name").value.trim());
-            localStorage.setItem("kae_text_hero_title", document.getElementById("input-hero-title").value.trim());
-            localStorage.setItem("kae_text_hero_desc", document.getElementById("input-hero-desc").value.trim());
-            localStorage.setItem("kae_text_long_title", document.getElementById("input-long-title").value.trim());
-            localStorage.setItem("kae_text_short_title", document.getElementById("input-short-title").value.trim());
-            localStorage.setItem("kae_text_test_title", document.getElementById("input-testimonials-title").value.trim());
-            localStorage.setItem("kae_text_contact_title", document.getElementById("input-contact-title").value.trim());
-            localStorage.setItem("kae_text_contact_desc", document.getElementById("input-contact-desc").value.trim());
-
             activeLongVideos = newLongs;
             activeShortVideos = newShorts;
             activeWhatsAppNumber = whatsappInput;
             activeIntroVideo = introInput;
             activeProfilePhoto = photoInput;
-            activeTestimonials = newTestimonials;
             activeCvUrl = cvInput;
 
             localStorage.setItem("kae_long_videos", JSON.stringify(activeLongVideos));
@@ -1382,7 +1160,6 @@
             localStorage.setItem("kae_whatsapp_number", activeWhatsAppNumber);
             localStorage.setItem("kae_intro_video", activeIntroVideo);
             localStorage.setItem("kae_profile_photo", activeProfilePhoto);
-            localStorage.setItem("kae_testimonials", JSON.stringify(activeTestimonials));
             localStorage.setItem("kae_cv_url", activeCvUrl);
 
             // Reload configurations
@@ -1402,24 +1179,13 @@
             localStorage.removeItem("kae_intro_video");
             localStorage.removeItem("kae_profile_photo");
             localStorage.removeItem("kae_theme_color");
-            localStorage.removeItem("kae_testimonials");
             localStorage.removeItem("kae_cv_url");
-            
-            localStorage.removeItem("kae_text_brand");
-            localStorage.removeItem("kae_text_hero_title");
-            localStorage.removeItem("kae_text_hero_desc");
-            localStorage.removeItem("kae_text_long_title");
-            localStorage.removeItem("kae_text_short_title");
-            localStorage.removeItem("kae_text_test_title");
-            localStorage.removeItem("kae_text_contact_title");
-            localStorage.removeItem("kae_text_contact_desc");
 
             activeLongVideos = [...DEFAULT_LONG_VIDS];
             activeShortVideos = [...DEFAULT_SHORT_VIDS];
             activeWhatsAppNumber = DEFAULT_WHATSAPP;
             activeIntroVideo = DEFAULT_INTRO_VIDEO;
             activeProfilePhoto = DEFAULT_PROFILE_PHOTO;
-            activeTestimonials = [...DEFAULT_TESTIMONIALS];
             activeCvUrl = DEFAULT_CV_URL;
 
             loadConfigurations();
@@ -1470,21 +1236,20 @@
             }, 1200);
         }
 
-        // --- SUBTLE INTERACTIVE CONSTALLATION FABRIC SIMULATION ---
+        // Subtle Ambient Star Particle Background - Interacts with Custom Play Cursor
         const canvas = document.getElementById("constellation-canvas");
         const ctx = canvas.getContext("2d");
 
         let particles = [];
         let sparks = [];
-        const maxParticles = 65;
+        const maxParticles = 60;
         let lastTargetX = 0;
         let lastTargetY = 0;
         let mouseVelocity = 0;
 
-        // Spring-mass parameters
-        const springK = 0.005; // Spring stiffness
-        const friction = 0.95; // Damping
-        const maxDist = 200;   // Force interaction field
+        const springK = 0.005; 
+        const friction = 0.95; 
+        const maxDist = 200;   
 
         function resizeCanvas() {
             canvas.width = window.innerWidth;
@@ -1513,18 +1278,15 @@
             }
 
             update() {
-                // 1. Gently drift anchors
                 this.driftAngle += 0.002;
                 this.anchorX += Math.cos(this.driftAngle) * this.driftSpeed;
                 this.anchorY += Math.sin(this.driftAngle) * this.driftSpeed;
 
-                // Restrict anchor drift bounds
                 if (this.anchorX < 0) this.anchorX = canvas.width;
                 if (this.anchorX > canvas.width) this.anchorX = 0;
                 if (this.anchorY < 0) this.anchorY = canvas.height;
                 if (this.anchorY > canvas.height) this.anchorY = 0;
 
-                // 2. Cursor spring physics integration
                 let forceX = 0;
                 let forceY = 0;
 
@@ -1534,7 +1296,6 @@
                     let dist = Math.sqrt(dx * dx + dy * dy);
 
                     if (dist < maxDist) {
-                        // Spring repulsion logic - warp away from cursor
                         const strength = (maxDist - dist) / maxDist;
                         const factor = strength * strength * 2.5; 
                         forceX = -(dx / dist) * factor;
@@ -1542,13 +1303,11 @@
                     }
                 }
 
-                // 3. Elastic return spring towards local anchor
                 let restDx = this.anchorX - this.x;
                 let restDy = this.anchorY - this.y;
                 forceX += restDx * springK;
                 forceY += restDy * springK;
 
-                // Apply forces to velocity with friction damping
                 this.vx = (this.vx + forceX) * friction;
                 this.vy = (this.vy + forceY) * friction;
 
@@ -1559,7 +1318,6 @@
             }
         }
 
-        // Quick fade trailing sparks on mouse velocity spikes
         class Spark {
             constructor(x, y) {
                 this.x = x;
@@ -1597,7 +1355,6 @@
             }
         }
 
-        // Monitor cursor speed and generate reactive sparkles
         window.addEventListener("mousemove", (e) => {
             let dx = e.clientX - lastTargetX;
             let dy = e.clientY - lastTargetY;
@@ -1606,7 +1363,6 @@
             lastTargetX = e.clientX;
             lastTargetY = e.clientY;
 
-            // Spawn elegant spark trace if moving fast
             if (mouseVelocity > 10 && sparks.length < 40) {
                 for (let i = 0; i < 2; i++) {
                     sparks.push(new Spark(e.clientX, e.clientY));
@@ -1626,8 +1382,6 @@
 
                     if (distance < 130) {
                         opacityValue = 1 - (distance / 130);
-
-                        // Highlight vector linkages close to cursor
                         let mouseBias = 0;
                         if (targetX > 0 && targetY > 0) {
                             let mDx1 = targetX - particles[a].x;
@@ -1652,14 +1406,9 @@
 
         function animate() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-            // Update Constellation Nodes
             particles.forEach(p => p.update());
             connectParticles();
-
-            // Update Velocity Sparks
             sparks = sparks.filter(spark => spark.update());
-
             requestAnimationFrame(animate);
         }
 
